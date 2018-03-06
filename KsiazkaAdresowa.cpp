@@ -106,11 +106,11 @@ int KsiazkaAdresowa::iloscAdresatow() {
     return adresaci.size();
 }
 
-int KsiazkaAdresowa::pobierzIdZalogowanegoUzytkownika(){
+int KsiazkaAdresowa::pobierzIdZalogowanegoUzytkownika() {
     return idZalogowanegoUzytkownika;
 }
 
-int KsiazkaAdresowa::ustawIdZalogowanegoUzytkownika(int id){
+int KsiazkaAdresowa::ustawIdZalogowanegoUzytkownika(int id) {
     idZalogowanegoUzytkownika = id;
 }
 
@@ -154,7 +154,7 @@ void KsiazkaAdresowa::wyszukajAdresataPoNazwisku(string szukanaWartosc) {
 
 void KsiazkaAdresowa::edytujDaneAdresata() {
     int id;
-    int wybor;
+    char wybor;
     string imie, nazwisko, telefon, email, adres;
     Komunikat komunikat;
     komunikat.wczytajTekst("Dane zostaly zmienione.");
@@ -188,71 +188,75 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
             cout << "5. Adres" << endl;
             cout << "6. Wszystko" << endl;
             cout << "9. Nic" << endl << endl;
-            cout << "wybor: ";
-            cin.sync();
-            cin >> wybor;
+
+            while(true) {
+                cout << "wybor: ";
+                cin.sync();
+                cin >> wybor;
 
 
-            switch(wybor) {
-            case 1:
-                cout << "Wprowadz imie: ";
-                cin >> imie;
-                (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
-                plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
-                komunikat.wyswietl();
-                return;
-            case 2:
-                cout << "Wprowadz nazwisko: ";
-                cin >> nazwisko;
-                (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
-                plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
-                komunikat.wyswietl();
-                return;
-            case 3:
-                cout << "Wprowadz telefon: ";
-                cin.sync();
-                getline(cin, telefon);
-                (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
-                plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
-                komunikat.wyswietl();
-                return;
-            case 4:
-                cout << "Wprowadz emial: ";
-                cin >> email;
-                (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
-                plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
-                komunikat.wyswietl();
-                return;
-            case 5:
-                cout << "Wprowadz adres: ";
-                cin.sync();
-                getline(cin, adres);
-                (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
-                plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
-                komunikat.wyswietl();
-                return;
-            case 6:
-                cout << "Wprowadz imie: ";
-                cin >> imie;
-                cout << "Wprowadz nazwisko: ";
-                cin >> nazwisko;
-                cout << "Wprowadz telefon: ";
-                cin.sync();
-                getline(cin, telefon);
-                cout << "Wprowadz emial: ";
-                cin >> email;
-                cout << "Wprowadz adres: ";
-                cin.sync();
-                getline(cin,adres);
-                (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
-                plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
-                komunikat.wyswietl();
+                switch(wybor) {
+                case '1':
+                    cout << "Wprowadz imie: ";
+                    cin >> imie;
+                    (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
+                    plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
+                    komunikat.wyswietl();
+                    return;
+                case '2':
+                    cout << "Wprowadz nazwisko: ";
+                    cin >> nazwisko;
+                    (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
+                    plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
+                    komunikat.wyswietl();
+                    return;
+                case 3:
+                    cout << "Wprowadz telefon: ";
+                    cin.sync();
+                    getline(cin, telefon);
+                    (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
+                    plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
+                    komunikat.wyswietl();
+                    return;
+                case '4':
+                    cout << "Wprowadz emial: ";
+                    cin >> email;
+                    (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
+                    plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
+                    komunikat.wyswietl();
+                    return;
+                case '5':
+                    cout << "Wprowadz adres: ";
+                    cin.sync();
+                    getline(cin, adres);
+                    (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
+                    plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
+                    komunikat.wyswietl();
+                    return;
+                case '6':
+                    cout << "Wprowadz imie: ";
+                    cin >> imie;
+                    cout << "Wprowadz nazwisko: ";
+                    cin >> nazwisko;
+                    cout << "Wprowadz telefon: ";
+                    cin.sync();
+                    getline(cin, telefon);
+                    cout << "Wprowadz emial: ";
+                    cin >> email;
+                    cout << "Wprowadz adres: ";
+                    cin.sync();
+                    getline(cin,adres);
+                    (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
+                    plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
+                    komunikat.wyswietl();
 
-                return;
-            case 9:
-                return;
+                    return;
+                case '9':
+                    return;
+                default:
+                    komunikat.wyswietl("Nie ma takiej opcji w menu", "ostrzegawczy", 0);
+                }
             }
-            // funkca do zapisania kontaktu do pliku.
         }
     }
     komunikat.neutralny("Kontakt o takim ID nie istnieje. W celu sprawdzenia ID wyszukaj lub wyswietl wszystkie kontakty");
@@ -284,6 +288,6 @@ void KsiazkaAdresowa::usunAdresata(int id) {
     Komunikat komunikat("Kontakt o takim ID nie istnieje", "ostrzegawczy");
 }
 
-void KsiazkaAdresowa::czyszczenieVektora(){
+void KsiazkaAdresowa::czyszczenieVektora() {
     adresaci.clear();
 }
