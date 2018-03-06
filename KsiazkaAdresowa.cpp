@@ -159,11 +159,12 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
     Komunikat komunikat;
     komunikat.wczytajTekst("Dane zostaly zmienione.");
     PlikAdresaci plik;
+    PobierzLiczbeCalkowita pobierzLiczbe;
 
     system("cls");
     cout << "EDYCJA:" << endl;
     cout << "Podaj ID kontaktu ktory chcesz edytowac: ";
-    cin >> id;
+    id = pobierzLiczbe.wprowadzWartosc();
     vector<Adresat>::iterator koniec = adresaci.end();
     for(vector<Adresat>::iterator itr = adresaci.begin(); itr != koniec; ++itr) {
         if((*itr).pobierzId() == id) {

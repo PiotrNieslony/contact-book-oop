@@ -5,6 +5,7 @@
 #include "Komunikat.h"
 #include "Adresat.h"
 #include "PlikAdresaci.h"
+#include "PobierzLiczbeCalkowita.h"
 
 using namespace std;
 

@@ -3,6 +3,7 @@
 #include "PlikUzytkownicy.h"
 #include "KsiazkaAdresowa.h"
 #include "Komunikat.h"
+#include "PobierzLiczbeCalkowita.h"
 
 using namespace std;
 
@@ -16,6 +17,7 @@ int main() {
     Uzytkownicy uzytkownicy;
     KsiazkaAdresowa adresaci;
     Komunikat komunikat;
+    PobierzLiczbeCalkowita liczba;
 
     while(true) {
         if( idZalogowanegoUzytkownika == 0) {
@@ -75,8 +77,7 @@ int main() {
                 system("cls");
                 cout << "Usuwanie:" << endl;
                 cout << "Podaj ID kontaktu ktory chcesz usunac: ";
-                cin >> id;
-                cin.sync();
+                id = liczba.wprowadzWartosc();
                 system("cls");
                 adresaci.usunAdresata(id);
                 break;
