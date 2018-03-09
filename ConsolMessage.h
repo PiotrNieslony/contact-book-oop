@@ -7,7 +7,7 @@ using namespace std;
 #ifndef KOMUNIKAT_H
 #define KOMUNIKAT_H
 
-class Komunikat{
+class ConsoleMessage{
     string tekst;
     string typ;
     int czasWyswietlania;
@@ -15,10 +15,10 @@ class Komunikat{
     int czasWysietlaniaKomunikatu();
     void wstrzymanieDzialaniaProgramu();
 public:
-    Komunikat();
-    Komunikat(string tresc);
-    Komunikat(string tresc, string typ);
-    Komunikat(string tresc, string typ, int czas);
+    ConsoleMessage();
+    ConsoleMessage(string tresc);
+    ConsoleMessage(string tresc, string typ);
+    ConsoleMessage(string tresc, string typ, int czas);
     void neutralny(string tresc);
     void ostrzegawczy(string tresc);
     void krytyczny(string tresc);

@@ -16,7 +16,7 @@ int main() {
     string szukanaWartosc;
     Users uzytkownicy;
     KsiazkaAdresowa adresaci;
-    Komunikat komunikat;
+    ConsoleMessage komunikat;
     PobierzLiczbeCalkowita liczba;
 
     while(true) {

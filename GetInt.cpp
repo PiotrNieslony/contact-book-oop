@@ -6,7 +6,7 @@ int PobierzLiczbeCalkowita::wprowadzWartosc() {
         cin.clear();
         cin.ignore();
         cin.sync();
-        Komunikat komunikat("Wprowadziles niepoprawna wartosc. ", "ostrzegawczy", 0);
+        ConsoleMessage komunikat("Wprowadziles niepoprawna wartosc. ", "ostrzegawczy", 0);
         cout  << "Wprowadz nowa wartosc (liczbe): ";
         cin >> liczbaCalkowita;
     }

@@ -16,8 +16,8 @@ void Users::addUser(User user) {
 
 void Users::displayUsers() {
     system("cls");
-    vector<User>::iterator koniec = listOfUser.end();
-    for(vector<User>::iterator itr = listOfUser.begin(); itr != koniec; ++itr) {
+    vector<User>::iterator vectorEnd = listOfUser.end();
+    for(vector<User>::iterator itr = listOfUser.begin(); itr != vectorEnd; ++itr) {
         cout << " ~ " << (*itr).getName() << endl;
     }
     system("pause");
@@ -29,9 +29,9 @@ int Users::numberOfRegisteredUsers(){
 
 int Users::idOfLastUser() {
     if (listOfUser.size() == 0) return 0;
-    vector<User>::iterator ostatniUzytkownik = listOfUser.end();
-    --ostatniUzytkownik;
-    return (*ostatniUzytkownik).getId();
+    vector<User>::iterator lastUser = listOfUser.end();
+    --lastUser;
+    return (*lastUser).getId();
 
 }
 
@@ -41,8 +41,8 @@ void Users::singUp() {
     string name, password;
     cout << "Podaj nazwe uzytkownika: ";
     cin >> name;
-    vector<User>::iterator koniec = listOfUser.end();
-    for(vector<User>::iterator itr = listOfUser.begin(); itr != koniec; ++itr) {
+    vector<User>::iterator vectorEnd = listOfUser.end();
+    for(vector<User>::iterator itr = listOfUser.begin(); itr != vectorEnd; ++itr) {
         if((*itr).getName() == name) {
             cout << "Taki uzytkownik juz istnieje. Wpisz inna nazwe uzytkownika: ";
             cin >> name;
@@ -60,12 +60,12 @@ void Users::singUp() {
 }
 
 int Users::logIn() {
-    Komunikat komunikat;
+    ConsoleMessage komunikat;
     string name, password;
     cout << "Podaj nazwe:  ";
     cin >> name;
-    vector<User>::iterator koniec = listOfUser.end();
-    for(vector<User>::iterator itr = listOfUser.begin(); itr != koniec; ++itr) {
+    vector<User>::iterator vectorEnd = listOfUser.end();
+    for(vector<User>::iterator itr = listOfUser.begin(); itr != vectorEnd; ++itr) {
         if((*itr).getName() == name) {
             for(int j=3; j>0; j--) {
                 cout << "Podaj haslo. pozostalo prob " << j << ": ";
@@ -87,8 +87,8 @@ int Users::logIn() {
 void Users::changePassword(int idLoggedUser) {
     string password;
     UsersFile file;
-    vector<User>::iterator koniec = listOfUser.end();
-    for(vector<User>::iterator itr = listOfUser.begin(); itr != koniec; ++itr) {
+    vector<User>::iterator vectorEnd = listOfUser.end();
+    for(vector<User>::iterator itr = listOfUser.begin(); itr != vectorEnd; ++itr) {
         if((*itr).getId() == idLoggedUser) {
             cout << "Wprawadz nowe haslo: ";
             cin >> password;
