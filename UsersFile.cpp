@@ -6,99 +6,99 @@
 
 using namespace std;
 
-PlikUzytkownicy::PlikUzytkownicy()
-    :Plik("Uzytkownicy.txt"){
-    nazwaPliku = "Uzytkownicy.txt";
+UsersFile::UsersFile()
+    :File("Users.txt"){
+    fileName = "Users.txt";
 }
 
-PlikUzytkownicy::PlikUzytkownicy(string name)
-    :Plik(name){
-    nazwaPliku = name;
+UsersFile::UsersFile(string name)
+    :File(name){
+    fileName = name;
 }
 
 
-void PlikUzytkownicy::dodajNowyRekord(User uzytkownik){
-    fstream plik;
-    plik.open(nazwaPliku.c_str(), ios::out | ios::app);
-    if(plik.good() == false) {
+void UsersFile::addRecord(User user){
+    fstream file;
+    file.open(fileName.c_str(), ios::out | ios::app);
+    if(file.good() == false) {
         cout << "Wystapil problem przy probie zapisu danych do pliku." << endl;
         return ;
     }
 
-    plik << uzytkownik.getId() << "|";
-    plik << uzytkownik.getName() << "|";
-    plik << uzytkownik.getPassword() << "|" << endl;
-    plik.close();
+    file << user.getId() << "|";
+    file << user.getName() << "|";
+    file << user.getPassword() << "|" << endl;
+    file.close();
 }
 
-void PlikUzytkownicy::edytujRekord(User uzytkownik){
-    string linia;
-    int idUzytkownika;
-    size_t pozycjaSeparatora;
+void UsersFile::editRecord(User user){
+    string lineFromFile;
+    int userId;
+    size_t separatorPositin;
     int i = 0;
-    string kopiaPliku = "." + nazwaPliku;
-    remove(kopiaPliku.c_str());
-    if((rename(nazwaPliku.c_str(), kopiaPliku.c_str())) != 0) {
+    string copyFileName = "." + fileName;
+    remove(copyFileName.c_str());
+    if((rename(fileName.c_str(), copyFileName.c_str())) != 0) {
         cout << ( "Blad przy tworzeniu kopii pliku" ) << endl;
         return;
     }
-    fstream plik;
-    fstream plikKopia;
-    plik.open(nazwaPliku.c_str(), ios::out | ios::app);
-    plikKopia.open(kopiaPliku.c_str(),ios::in);
-    if(plik.good() == false || plikKopia.good() == false) {
+    fstream file;
+    fstream fileCopy;
+    file.open(fileName.c_str(), ios::out | ios::app);
+    fileCopy.open(copyFileName.c_str(),ios::in);
+    if(file.good() == false || fileCopy.good() == false) {
         cout << "Wystapil problem przy probie zapisu danych do pliku." << endl;
         return;
     }
-    while(getline(plikKopia, linia)) {
-        pozycjaSeparatora = linia.find("|");
-        idUzytkownika = atoi(linia.substr(0, pozycjaSeparatora).c_str());
-        if (idUzytkownika == uzytkownik.getId()) {
-            plik << uzytkownik.getId() << "|";
-            plik << uzytkownik.getName() << "|";
-            plik << uzytkownik.getPassword()<< "|" << endl;
+    while(getline(fileCopy, lineFromFile)) {
+        separatorPositin = lineFromFile.find("|");
+        userId = atoi(lineFromFile.substr(0, separatorPositin).c_str());
+        if (userId == user.getId()) {
+            file << user.getId() << "|";
+            file << user.getName() << "|";
+            file << user.getPassword()<< "|" << endl;
         } else {
-            plik << linia << endl;
+            file << lineFromFile << endl;
         }
     }
-    plik.close();
-    plikKopia.close();
+    file.close();
+    fileCopy.close();
 }
 
-void PlikUzytkownicy::wczytajRekordy(vector<User>& uzytkownicyLista){
-    string linia;
+void UsersFile::loadAllRecords(vector<User>& listOfUser){
+    string lineFromFile;
     int id;
     string name, password;
-    User pojedynczyUzytkownik;
-    fstream plikUzytkownicy;
-    size_t pozycjaZnakuOd;
-    size_t pozycjaSeparatora;
-    int iloscZnakow;
+    User singleUser;
+    fstream usersFile;
+    size_t charPosition_from;
+    size_t separatorPositin;
+    int charQuantity;
 
-    plikUzytkownicy.open("Uzytkownicy.txt",ios::in);
-    if(plikUzytkownicy.good() == false) {
-        cout << "Wystapil problem z odczytem kontaktow z pliku: " << "Uzytkownicy.txt" <<  endl;
+    usersFile.open(fileName.c_str(),ios::in);
+    if(usersFile.good() == false) {
+        cout << "Wystapil problem z odczytem kontaktow z pliku: " << fileName <<  endl;
         return;
     }
 
-    while(getline(plikUzytkownicy, linia)) {
+    while(getline(usersFile, lineFromFile)) {
 
-        pozycjaSeparatora = linia.find("|");
-       id = atoi(linia.substr(0, pozycjaSeparatora).c_str());
+        separatorPositin = lineFromFile.find("|");
+       id = atoi(lineFromFile.substr(0, separatorPositin).c_str());
 
-        pozycjaZnakuOd = pozycjaSeparatora+1;
-        pozycjaSeparatora = linia.find("|",pozycjaZnakuOd);
-        iloscZnakow = pozycjaSeparatora - pozycjaZnakuOd;
-        name = linia.substr(pozycjaZnakuOd, iloscZnakow);
+        charPosition_from = separatorPositin+1;
+        separatorPositin = lineFromFile.find("|",charPosition_from);
+        charQuantity = separatorPositin - charPosition_from;
+        name = lineFromFile.substr(charPosition_from, charQuantity);
 
-        pozycjaZnakuOd = pozycjaSeparatora+1;
-        pozycjaSeparatora = linia.find("|",pozycjaZnakuOd);
-        iloscZnakow = pozycjaSeparatora - pozycjaZnakuOd;
-        password = linia.substr(pozycjaZnakuOd, iloscZnakow);
+        charPosition_from = separatorPositin+1;
+        separatorPositin = lineFromFile.find("|",charPosition_from);
+        charQuantity = separatorPositin - charPosition_from;
+        password = lineFromFile.substr(charPosition_from, charQuantity);
 
-        pojedynczyUzytkownik.setAll(id, name, password);
-        uzytkownicyLista.push_back(pojedynczyUzytkownik);
+        singleUser.setAll(id, name, password);
+        listOfUser.push_back(singleUser);
     }
-    plikUzytkownicy.close();
+    usersFile.close();
 }
 

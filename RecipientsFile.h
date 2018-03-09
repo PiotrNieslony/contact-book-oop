@@ -6,19 +6,19 @@
 #include "File.h"
 #include "ConsolMessage.h"
 
-#ifndef PLIK_UZYTKOWNICY_H
-#define PLIK_UZYTKOWNICY_H
+#ifndef RECIPIENTS_FILE_H
+#define RECIPIENTS_FILE_H
 
 using namespace std;
 
-class PlikAdresaci :public Plik {
+class PlikAdresaci :public File {
 public:
     PlikAdresaci();
     PlikAdresaci(string name);
-    void edytujRekord(Adresat adresat, int idZalogowanegoUzytkownika);
+    void editRecord(Adresat adresat, int idZalogowanegoUzytkownika);
     int usunRekord(Adresat adresat, int idZalogowanegoUzytkownika);
-    void dodajNowyRekord(Adresat adresat, int idZalogowanegoUzytkownika);
-    int wczytajRekordy(vector<Adresat> & adresaci, int idZalogowanegoUzytkownika);
+    void addRecord(Adresat adresat, int idZalogowanegoUzytkownika);
+    int loadAllRecords(vector<Adresat> & adresaci, int idZalogowanegoUzytkownika);
 };
 
 #endif

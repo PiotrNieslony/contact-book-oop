@@ -1,158 +1,158 @@
 #include "RecipientsFile.h"
 
 PlikAdresaci::PlikAdresaci()
-    :Plik("Adresaci.txt") {
-    nazwaPliku = "Adresaci.txt";
+    :File("Adresaci.txt") {
+    fileName = "Adresaci.txt";
 }
 PlikAdresaci::PlikAdresaci(string name)
-    :Plik(name) {
-    nazwaPliku = name;
+    :File(name) {
+    fileName = name;
 }
 
-void PlikAdresaci::edytujRekord(Adresat adresat, int idZalogowanegoUzytkownika) {
-    string linia;
+void PlikAdresaci::editRecord(Adresat adresat, int idZalogowanegoUzytkownika) {
+    string lineFromFile;
     int idAdresata;
-    size_t pozycjaSeparatora;
-    string kopiaPliku = "." + nazwaPliku;
-    remove(kopiaPliku.c_str());
-    if((rename(nazwaPliku.c_str(), kopiaPliku.c_str())) != 0) {
-        Komunikat komunikat( "Blad przy tworzeniu kopii pliku" + kopiaPliku, "krytyczny");
+    size_t separatorPositin;
+    string copyFileName = "." + fileName;
+    remove(copyFileName.c_str());
+    if((rename(fileName.c_str(), copyFileName.c_str())) != 0) {
+        Komunikat komunikat( "Blad przy tworzeniu kopii pliku" + copyFileName, "krytyczny");
         return;
     }
-    fstream plik;
-    fstream plikKopia;
-    plik.open(nazwaPliku.c_str(), ios::out | ios::app);
-    plikKopia.open(kopiaPliku.c_str(),ios::in);
-    if(plik.good() == false || plikKopia.good() == false) {
-        Komunikat komunikat("Wystapil problem przy probie zapisu danych do pliku." + nazwaPliku, "krytyczny");
+    fstream file;
+    fstream fileCopy;
+    file.open(fileName.c_str(), ios::out | ios::app);
+    fileCopy.open(copyFileName.c_str(),ios::in);
+    if(file.good() == false || fileCopy.good() == false) {
+        Komunikat komunikat("Wystapil problem przy probie zapisu danych do pliku." + fileName, "krytyczny");
         return;
     }
-    while(getline(plikKopia, linia)) {
+    while(getline(fileCopy, lineFromFile)) {
 
-        pozycjaSeparatora = linia.find("|");
-        idAdresata = atoi(linia.substr(0, pozycjaSeparatora).c_str());
+        separatorPositin = lineFromFile.find("|");
+        idAdresata = atoi(lineFromFile.substr(0, separatorPositin).c_str());
         if (idAdresata == adresat.getId()) {
-            plik << adresat.getId() << "|";
-            plik << idZalogowanegoUzytkownika << "|";
-            plik << adresat.pobierzImie() << "|";
-            plik << adresat.pobierzNazwisko() << "|";
-            plik << adresat.pobierzTelefon() << "|";
-            plik << adresat.pobierzEmail() << "|";
-            plik << adresat.pobierzAdres() << "|" << endl;
+            file << adresat.getId() << "|";
+            file << idZalogowanegoUzytkownika << "|";
+            file << adresat.pobierzImie() << "|";
+            file << adresat.pobierzNazwisko() << "|";
+            file << adresat.pobierzTelefon() << "|";
+            file << adresat.pobierzEmail() << "|";
+            file << adresat.pobierzAdres() << "|" << endl;
         } else {
-            plik << linia << endl;
+            file << lineFromFile << endl;
         }
     }
-    plik.close();
-    plikKopia.close();
+    file.close();
+    fileCopy.close();
 }
 
 int PlikAdresaci::usunRekord(Adresat adresat, int idZalogowanegoUzytkownika) {
-    string linia;
+    string lineFromFile;
     int idAdresata;
     int idOstatniegoAdresataWPliku;
-    size_t pozycjaSeparatora;
-    string kopiaPliku = "." + nazwaPliku;
-    remove(kopiaPliku.c_str());
-    if((rename(nazwaPliku.c_str(), kopiaPliku.c_str())) != 0) {
-        Komunikat komunikat( "Blad przy tworzeniu kopii pliku" + kopiaPliku, "krytyczny");
+    size_t separatorPositin;
+    string copyFileName = "." + fileName;
+    remove(copyFileName.c_str());
+    if((rename(fileName.c_str(), copyFileName.c_str())) != 0) {
+        Komunikat komunikat( "Blad przy tworzeniu kopii pliku" + copyFileName, "krytyczny");
         return 0;
     }
-    fstream plik;
-    fstream plikKopia;
-    plik.open(nazwaPliku.c_str(), ios::out | ios::app);
-    plikKopia.open(kopiaPliku.c_str(),ios::in);
-    if(plik.good() == false || plikKopia.good() == false) {
-        Komunikat komunikat("Wystapil problem przy probie zapisu danych do pliku." + nazwaPliku, "krytyczny");
+    fstream file;
+    fstream fileCopy;
+    file.open(fileName.c_str(), ios::out | ios::app);
+    fileCopy.open(copyFileName.c_str(),ios::in);
+    if(file.good() == false || fileCopy.good() == false) {
+        Komunikat komunikat("Wystapil problem przy probie zapisu danych do pliku." + fileName, "krytyczny");
         return 0;
     }
-    while(getline(plikKopia, linia)) {
+    while(getline(fileCopy, lineFromFile)) {
 
-        pozycjaSeparatora = linia.find("|");
-        idAdresata = atoi(linia.substr(0, pozycjaSeparatora).c_str());
+        separatorPositin = lineFromFile.find("|");
+        idAdresata = atoi(lineFromFile.substr(0, separatorPositin).c_str());
 
         if (idAdresata == adresat.getId()) continue;
         else {
                 idOstatniegoAdresataWPliku = idAdresata;
-                plik << linia << endl;
+                file << lineFromFile << endl;
         }
     }
-    plik.close();
-    plikKopia.close();
+    file.close();
+    fileCopy.close();
     return idOstatniegoAdresataWPliku;
 }
 
-void PlikAdresaci::dodajNowyRekord(Adresat adresat,  int idZalogowanegoUzytkownika) {
-    fstream plik;
-    plik.open(nazwaPliku.c_str(), ios::out | ios::app);
-    if(plik.good() == false) {
-        Komunikat komunikat("Wystapil problem przy probie zapisu danych do pliku." + nazwaPliku, "krytyczny");
+void PlikAdresaci::addRecord(Adresat adresat,  int idZalogowanegoUzytkownika) {
+    fstream file;
+    file.open(fileName.c_str(), ios::out | ios::app);
+    if(file.good() == false) {
+        Komunikat komunikat("Wystapil problem przy probie zapisu danych do pliku." + fileName, "krytyczny");
         return ;
     }
 
-    plik << adresat.getId() << "|";
-    plik << idZalogowanegoUzytkownika << "|";
-    plik << adresat.pobierzImie() << "|";
-    plik << adresat.pobierzNazwisko() << "|";
-    plik << adresat.pobierzTelefon() << "|";
-    plik << adresat.pobierzEmail() << "|";
-    plik << adresat.pobierzAdres() << "|" << endl;
-    plik.close();
+    file << adresat.getId() << "|";
+    file << idZalogowanegoUzytkownika << "|";
+    file << adresat.pobierzImie() << "|";
+    file << adresat.pobierzNazwisko() << "|";
+    file << adresat.pobierzTelefon() << "|";
+    file << adresat.pobierzEmail() << "|";
+    file << adresat.pobierzAdres() << "|" << endl;
+    file.close();
 }
 
-int PlikAdresaci::wczytajRekordy(vector<Adresat> & adresaci, int idZalogowanegoUzytkownika) {
-    string linia;
+int PlikAdresaci::loadAllRecords(vector<Adresat> & adresaci, int idZalogowanegoUzytkownika) {
+    string lineFromFile;
     int id;
     int idWlascicielaKontaktu;
     int idOstatniegoAdresata;
     string imie, nazwisko, telefon, email, adres;
     fstream plikAdresaci;
     size_t pozycjaZnakuOd;
-    size_t pozycjaSeparatora;
-    int iloscZnakow;
+    size_t separatorPositin;
+    int charQuantity;
 
-    plikAdresaci.open(nazwaPliku.c_str(),ios::in);
+    plikAdresaci.open(fileName.c_str(),ios::in);
     if(plikAdresaci.good() == false) {
-        Komunikat komunikat("Wystapil problem z odczytem kontaktow z pliku: " + nazwaPliku, "krytyczny");
+        Komunikat komunikat("Wystapil problem z odczytem kontaktow z pliku: " + fileName, "krytyczny");
         return 0;
     }
 
-    while(getline(plikAdresaci, linia)) {
+    while(getline(plikAdresaci, lineFromFile)) {
 
-        pozycjaSeparatora = linia.find("|");
-        id = atoi(linia.substr(0, pozycjaSeparatora).c_str());
+        separatorPositin = lineFromFile.find("|");
+        id = atoi(lineFromFile.substr(0, separatorPositin).c_str());
         idOstatniegoAdresata = id;
 
-        pozycjaZnakuOd = pozycjaSeparatora+1;
-        pozycjaSeparatora = linia.find("|",pozycjaZnakuOd);
-        iloscZnakow = pozycjaSeparatora - pozycjaZnakuOd;
-        idWlascicielaKontaktu = atoi(linia.substr(pozycjaZnakuOd, iloscZnakow).c_str());
+        pozycjaZnakuOd = separatorPositin+1;
+        separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
+        charQuantity = separatorPositin - pozycjaZnakuOd;
+        idWlascicielaKontaktu = atoi(lineFromFile.substr(pozycjaZnakuOd, charQuantity).c_str());
         if(idWlascicielaKontaktu != idZalogowanegoUzytkownika) continue;
 
-        pozycjaZnakuOd = pozycjaSeparatora+1;
-        pozycjaSeparatora = linia.find("|",pozycjaZnakuOd);
-        iloscZnakow = pozycjaSeparatora - pozycjaZnakuOd;
-        imie = linia.substr(pozycjaZnakuOd, iloscZnakow);
+        pozycjaZnakuOd = separatorPositin+1;
+        separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
+        charQuantity = separatorPositin - pozycjaZnakuOd;
+        imie = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
 
-        pozycjaZnakuOd = pozycjaSeparatora+1;
-        pozycjaSeparatora = linia.find("|",pozycjaZnakuOd);
-        iloscZnakow = pozycjaSeparatora - pozycjaZnakuOd;
-        nazwisko = linia.substr(pozycjaZnakuOd, iloscZnakow);
+        pozycjaZnakuOd = separatorPositin+1;
+        separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
+        charQuantity = separatorPositin - pozycjaZnakuOd;
+        nazwisko = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
 
-        pozycjaZnakuOd = pozycjaSeparatora+1;
-        pozycjaSeparatora = linia.find("|",pozycjaZnakuOd);
-        iloscZnakow = pozycjaSeparatora - pozycjaZnakuOd;
-        telefon = linia.substr(pozycjaZnakuOd, iloscZnakow);
+        pozycjaZnakuOd = separatorPositin+1;
+        separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
+        charQuantity = separatorPositin - pozycjaZnakuOd;
+        telefon = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
 
-        pozycjaZnakuOd = pozycjaSeparatora+1;
-        pozycjaSeparatora = linia.find("|",pozycjaZnakuOd);
-        iloscZnakow = pozycjaSeparatora - pozycjaZnakuOd;
-        email = linia.substr(pozycjaZnakuOd, iloscZnakow);
+        pozycjaZnakuOd = separatorPositin+1;
+        separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
+        charQuantity = separatorPositin - pozycjaZnakuOd;
+        email = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
 
-        pozycjaZnakuOd = pozycjaSeparatora+1;
-        pozycjaSeparatora = linia.find("|",pozycjaZnakuOd);
-        iloscZnakow = pozycjaSeparatora - pozycjaZnakuOd;
-        adres = linia.substr(pozycjaZnakuOd, iloscZnakow);
+        pozycjaZnakuOd = separatorPositin+1;
+        separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
+        charQuantity = separatorPositin - pozycjaZnakuOd;
+        adres = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
 
         Adresat pojedynczyAdresat(id, imie, nazwisko, telefon, email, adres);
 

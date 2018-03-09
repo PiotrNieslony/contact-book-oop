@@ -6,30 +6,30 @@
 using namespace std;
 
 Uzytkownicy::Uzytkownicy(){
-    PlikUzytkownicy plikUzytkownicy;
-    plikUzytkownicy.wczytajRekordy(uzytkownicyLista);
+    UsersFile usersFile;
+    usersFile.loadAllRecords(listOfUser);
 }
 
-void Uzytkownicy::dodajUzytkownika(User uzytkownik) {
-    uzytkownicyLista.push_back(uzytkownik);
+void Uzytkownicy::dodajUzytkownika(User user) {
+    listOfUser.push_back(user);
 }
 
 void Uzytkownicy::wyswietlUzytkownikow() {
     system("cls");
-    vector<User>::iterator koniec = uzytkownicyLista.end();
-    for(vector<User>::iterator itr = uzytkownicyLista.begin(); itr != koniec; ++itr) {
+    vector<User>::iterator koniec = listOfUser.end();
+    for(vector<User>::iterator itr = listOfUser.begin(); itr != koniec; ++itr) {
         cout << " ~ " << (*itr).getName() << endl;
     }
     system("pause");
 }
 
 int Uzytkownicy::iloscZarejestrowanychUzytkownikow(){
-    return uzytkownicyLista.size();
+    return listOfUser.size();
 }
 
 int Uzytkownicy::idOstatniegoUzytkownika() {
-    if (uzytkownicyLista.size() == 0) return 0;
-    vector<User>::iterator ostatniUzytkownik = uzytkownicyLista.end();
+    if (listOfUser.size() == 0) return 0;
+    vector<User>::iterator ostatniUzytkownik = listOfUser.end();
     --ostatniUzytkownik;
     return (*ostatniUzytkownik).getId();
 
@@ -37,26 +37,26 @@ int Uzytkownicy::idOstatniegoUzytkownika() {
 
 
 void Uzytkownicy::rejestracja() {
-    PlikUzytkownicy plik;
+    UsersFile file;
     string name, password;
     cout << "Podaj nazwe uzytkownika: ";
     cin >> name;
-    vector<User>::iterator koniec = uzytkownicyLista.end();
-    for(vector<User>::iterator itr = uzytkownicyLista.begin(); itr != koniec; ++itr) {
+    vector<User>::iterator koniec = listOfUser.end();
+    for(vector<User>::iterator itr = listOfUser.begin(); itr != koniec; ++itr) {
         if((*itr).getName() == name) {
             cout << "Taki uzytkownik juz istnieje. Wpisz inna nazwe uzytkownika: ";
             cin >> name;
-            itr = uzytkownicyLista.begin();
+            itr = listOfUser.begin();
         }
     }
     cout << "Podaj haslo: ";
     cin >> password;
 
-    User pojedynczyUzytkownik(idOstatniegoUzytkownika() + 1, name, password);
-    dodajUzytkownika(pojedynczyUzytkownik);
+    User singleUser(idOstatniegoUzytkownika() + 1, name, password);
+    dodajUzytkownika(singleUser);
 
-    PlikUzytkownicy plikUzytkownicy();
-    plik.dodajNowyRekord(pojedynczyUzytkownik);
+    UsersFile usersFile();
+    file.addRecord(singleUser);
 }
 
 int Uzytkownicy::logowanie() {
@@ -64,8 +64,8 @@ int Uzytkownicy::logowanie() {
     string name, password;
     cout << "Podaj nazwe:  ";
     cin >> name;
-    vector<User>::iterator koniec = uzytkownicyLista.end();
-    for(vector<User>::iterator itr = uzytkownicyLista.begin(); itr != koniec; ++itr) {
+    vector<User>::iterator koniec = listOfUser.end();
+    for(vector<User>::iterator itr = listOfUser.begin(); itr != koniec; ++itr) {
         if((*itr).getName() == name) {
             for(int j=3; j>0; j--) {
                 cout << "Podaj haslo. pozostalo prob " << j << ": ";
@@ -86,14 +86,14 @@ int Uzytkownicy::logowanie() {
 
 void Uzytkownicy::changePassword(int idZalogowanegoUzytkownika) {
     string password;
-    PlikUzytkownicy plik;
-    vector<User>::iterator koniec = uzytkownicyLista.end();
-    for(vector<User>::iterator itr = uzytkownicyLista.begin(); itr != koniec; ++itr) {
+    UsersFile file;
+    vector<User>::iterator koniec = listOfUser.end();
+    for(vector<User>::iterator itr = listOfUser.begin(); itr != koniec; ++itr) {
         if((*itr).getId() == idZalogowanegoUzytkownika) {
             cout << "Wprawadz nowe haslo: ";
             cin >> password;
             (*itr).changePassword(password);
-            plik.edytujRekord(*itr);
+            file.editRecord(*itr);
         }
     }
 }

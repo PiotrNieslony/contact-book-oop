@@ -4,12 +4,12 @@
 
 using namespace std;
 
-Plik::Plik(string name) {
-    nazwaPliku = name;
+File::File(string name) {
+    fileName = name;
 }
 
-bool Plik::czyPlikJestPusty() {
-    ifstream plik (nazwaPliku.c_str(), ifstream::in);
-    return plik.peek() == ifstream::traits_type::eof();
+bool File::czyPlikJestPusty() {
+    ifstream file (fileName.c_str(), ifstream::in);
+    return file.peek() == ifstream::traits_type::eof();
 }
 

@@ -6,11 +6,11 @@ using namespace std;
 #ifndef PLIK_H
 #define PLIK_H
 
-class Plik {
+class File {
 protected:
-    string nazwaPliku;
+    string fileName;
 public:
-    Plik(string name);
+    File(string name);
     bool czyPlikJestPusty();
 };
 

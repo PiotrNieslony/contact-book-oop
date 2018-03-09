@@ -5,18 +5,18 @@
 #include "User.h"
 #include "File.h"
 
-#ifndef PLIK_UZYTKOWNICY_H
-#define PLIK_UZYTKOWNICY_H
+#ifndef USERS_FILE_H
+#define USERS_FILE_H
 
 using namespace std;
 
-class PlikUzytkownicy :public Plik {
+class UsersFile :public File {
 public:
-    PlikUzytkownicy();
-    PlikUzytkownicy(string name);
-    void edytujRekord(User uzytkownik);
-    void dodajNowyRekord(User uzytkownik);
-    void wczytajRekordy(vector<User> & uzytkownicyLista);
+    UsersFile();
+    UsersFile(string name);
+    void editRecord(User user);
+    void addRecord(User user);
+    void loadAllRecords(vector<User> & listOfUser);
 };
 
 #endif
