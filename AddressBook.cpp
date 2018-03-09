@@ -14,14 +14,14 @@ void KsiazkaAdresowa::wyswietlNaglowekTabeli() {
     wyswieltLinieOdzielajaca();
 }
 
-void KsiazkaAdresowa::wyswietlWierszTabeli(Adresat adresat) {
+void KsiazkaAdresowa::wyswietlWierszTabeli(Recipient recipient) {
     printf ("|%-3i|%-12s|%-12s|%-11s|%-30s|%-45s|\n",
-            adresat.getId(),
-            adresat.getFirstName().c_str(),
-            adresat.getLastName().c_str(),
-            adresat.getPhoneNumber().c_str(),
-            adresat.getEmail().c_str(),
-            adresat.getAddress().c_str());
+            recipient.getId(),
+            recipient.getFirstName().c_str(),
+            recipient.getLastName().c_str(),
+            recipient.getPhoneNumber().c_str(),
+            recipient.getEmail().c_str(),
+            recipient.getAddress().c_str());
 }
 
 void KsiazkaAdresowa::komunikatOilosciZnalezionychKontaktow(int iloscZnalezionychKontaktow, string szukanaWartosc) {
@@ -48,8 +48,8 @@ void KsiazkaAdresowa::komunikatOilosciZnalezionychKontaktow(int iloscZnalezionyc
 }
 
 bool KsiazkaAdresowa::czyAresatOTakimIDistnieje(int id) {
-    vector<Adresat>::iterator vectorEnd = adresaci.end();
-    for(vector<Adresat>::iterator itr = adresaci.begin(); itr != vectorEnd; ++itr) {
+    vector<Recipient>::iterator vectorEnd = recipients.end();
+    for(vector<Recipient>::iterator itr = recipients.begin(); itr != vectorEnd; ++itr) {
         if((*itr).getId() == id) return true;
     }
     return false;
@@ -61,20 +61,20 @@ KsiazkaAdresowa::KsiazkaAdresowa() {
 
 KsiazkaAdresowa::KsiazkaAdresowa(int id) {
     idLoggedUser = id;
-    PlikAdresaci plikAdresaci;
-    idOstatniegoAdresataWPliku = plikAdresaci.loadAllRecords(adresaci, idLoggedUser);
+    RecipientsFile plikAdresaci;
+    idOstatniegoAdresataWPliku = plikAdresaci.loadAllRecords(recipients, idLoggedUser);
 }
 
 void KsiazkaAdresowa::wczytajKontaktyZPliku() {
-    PlikAdresaci plikAdresaci;
+    RecipientsFile plikAdresaci;
     if(plikAdresaci.isFileEmpty()) idOstatniegoAdresataWPliku = 0;
-    else idOstatniegoAdresataWPliku = plikAdresaci.loadAllRecords(adresaci, idLoggedUser);
+    else idOstatniegoAdresataWPliku = plikAdresaci.loadAllRecords(recipients, idLoggedUser);
 }
 
-void KsiazkaAdresowa::dodajAdresata(Adresat adresat) {
-    adresaci.push_back(adresat);
-    PlikAdresaci plikAdresaci;
-    plikAdresaci.addRecord(adresat, idLoggedUser);
+void KsiazkaAdresowa::dodajAdresata(Recipient recipient) {
+    recipients.push_back(recipient);
+    RecipientsFile plikAdresaci;
+    plikAdresaci.addRecord(recipient, idLoggedUser);
 }
 
 void KsiazkaAdresowa::wpiszAdresata() {
@@ -96,14 +96,14 @@ void KsiazkaAdresowa::wpiszAdresata() {
     cin.sync();
     getline(cin, address);
 
-    Adresat adresat(id, firstName, lastName, phone, email, address);
-    dodajAdresata(adresat);
+    Recipient recipient(id, firstName, lastName, phone, email, address);
+    dodajAdresata(recipient);
     idOstatniegoAdresataWPliku++;
     ConsoleMessage message("Super, dodales nowe dane kontaktowe.");
 }
 
 int KsiazkaAdresowa::iloscAdresatow() {
-    return adresaci.size();
+    return recipients.size();
 }
 
 int KsiazkaAdresowa::pobierzIdZalogowanegoUzytkownika() {
@@ -116,8 +116,8 @@ int KsiazkaAdresowa::ustawIdZalogowanegoUzytkownika(int id) {
 
 void KsiazkaAdresowa::wyswietlAdresatow() {
     wyswietlNaglowekTabeli();
-    vector<Adresat>::iterator vectorEnd = adresaci.end();
-    for(vector<Adresat>::iterator itr = adresaci.begin(); itr != vectorEnd; ++itr) {
+    vector<Recipient>::iterator vectorEnd = recipients.end();
+    for(vector<Recipient>::iterator itr = recipients.begin(); itr != vectorEnd; ++itr) {
         wyswietlWierszTabeli(*itr);
     }
 
@@ -127,8 +127,8 @@ void KsiazkaAdresowa::wyswietlAdresatow() {
 void KsiazkaAdresowa::wyszukajAdresataPoImieniu(string szukanaWartosc) {
     int iloscZnalezionychKontaktow = 0;
     wyswietlNaglowekTabeli();
-    vector<Adresat>::iterator vectorEnd = adresaci.end();
-    for(vector<Adresat>::iterator itr = adresaci.begin(); itr != vectorEnd; ++itr) {
+    vector<Recipient>::iterator vectorEnd = recipients.end();
+    for(vector<Recipient>::iterator itr = recipients.begin(); itr != vectorEnd; ++itr) {
         if((*itr).getFirstName() == szukanaWartosc) {
             wyswietlWierszTabeli(*itr);
             iloscZnalezionychKontaktow++;
@@ -141,8 +141,8 @@ void KsiazkaAdresowa::wyszukajAdresataPoImieniu(string szukanaWartosc) {
 void KsiazkaAdresowa::wyszukajAdresataPoNazwisku(string szukanaWartosc) {
     int iloscZnalezionychKontaktow = 0;
     wyswietlNaglowekTabeli();
-    vector<Adresat>::iterator vectorEnd = adresaci.end();
-    for(vector<Adresat>::iterator itr = adresaci.begin(); itr != vectorEnd; ++itr) {
+    vector<Recipient>::iterator vectorEnd = recipients.end();
+    for(vector<Recipient>::iterator itr = recipients.begin(); itr != vectorEnd; ++itr) {
         if((*itr).getLastName() == szukanaWartosc) {
             wyswietlWierszTabeli(*itr);
             iloscZnalezionychKontaktow++;
@@ -158,15 +158,15 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
     string firstName, lastName, phone, email, address;
     ConsoleMessage message;
     message.setText("Dane zostaly zmienione.");
-    PlikAdresaci file;
+    RecipientsFile file;
     PobierzLiczbeCalkowita pobierzLiczbe;
 
     system("cls");
     cout << "EDYCJA:" << endl;
     cout << "Podaj ID kontaktu ktory chcesz edytowac: ";
     id = pobierzLiczbe.wprowadzWartosc();
-    vector<Adresat>::iterator vectorEnd = adresaci.end();
-    for(vector<Adresat>::iterator itr = adresaci.begin(); itr != vectorEnd; ++itr) {
+    vector<Recipient>::iterator vectorEnd = recipients.end();
+    for(vector<Recipient>::iterator itr = recipients.begin(); itr != vectorEnd; ++itr) {
         if((*itr).getId() == id) {
 
             firstName = (*itr).getFirstName();
@@ -264,8 +264,8 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
 
 void KsiazkaAdresowa::usunAdresata(int id) {
     char wybor;
-    vector<Adresat>::iterator vectorEnd = adresaci.end();
-    for(vector<Adresat>::iterator itr = adresaci.begin(); itr != vectorEnd; ++itr) {
+    vector<Recipient>::iterator vectorEnd = recipients.end();
+    for(vector<Recipient>::iterator itr = recipients.begin(); itr != vectorEnd; ++itr) {
         if((*itr).getId() == id) {
             wyswietlNaglowekTabeli();
             wyswietlWierszTabeli(*itr);
@@ -274,9 +274,9 @@ void KsiazkaAdresowa::usunAdresata(int id) {
             cout << endl << "Czy napewno chcesz usunc wybrany kontakt?(T - tak, N - nie): ";
             cin >> wybor;
             if(wybor  == 't' || wybor  == 'T') {
-                PlikAdresaci file;
-                idOstatniegoAdresataWPliku = file.usunRekord(*itr, idLoggedUser);
-                adresaci.erase(itr);
+                RecipientsFile file;
+                idOstatniegoAdresataWPliku = file.deleteRecord(*itr, idLoggedUser);
+                recipients.erase(itr);
                 if(file.isFileEmpty()) idOstatniegoAdresataWPliku = 0;
                 ConsoleMessage message("Kontakt zostal usuniety.");
                 return;
@@ -289,5 +289,5 @@ void KsiazkaAdresowa::usunAdresata(int id) {
 }
 
 void KsiazkaAdresowa::czyszczenieVektora() {
-    adresaci.clear();
+    recipients.clear();
 }

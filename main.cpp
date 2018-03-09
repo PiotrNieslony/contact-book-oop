@@ -15,7 +15,7 @@ int main() {
     int id = 0;
     string szukanaWartosc;
     Users uzytkownicy;
-    KsiazkaAdresowa adresaci;
+    KsiazkaAdresowa recipients;
     ConsoleMessage message;
     PobierzLiczbeCalkowita liczba;
 
@@ -38,8 +38,8 @@ int main() {
                 uzytkownicy.singUp();
             } else if(wybor == '2')     {
                 idLoggedUser = uzytkownicy.logIn();
-                adresaci.ustawIdZalogowanegoUzytkownika(idLoggedUser);
-                adresaci.wczytajKontaktyZPliku();
+                recipients.ustawIdZalogowanegoUzytkownika(idLoggedUser);
+                recipients.wczytajKontaktyZPliku();
             } else if(wybor == '3') {
                 uzytkownicy.displayUsers();
             } else if(wybor == '9') {
@@ -49,7 +49,7 @@ int main() {
             system("cls");
             naglowekAplikacji();
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),11);
-            cout << "Ilosc zapisanych kontaktow: "<< adresaci.iloscAdresatow()  << endl << endl;
+            cout << "Ilosc zapisanych kontaktow: "<< recipients.iloscAdresatow()  << endl << endl;
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),15);
             cout << "MENU GLOWNE: "<< endl;
             cout << "1. Dodaj nowy kontakt" << endl;
@@ -66,12 +66,12 @@ int main() {
 
             switch(wybor) {
             case '1':
-                adresaci.wpiszAdresata();
+                recipients.wpiszAdresata();
                 break;
             case '2':
                 system("cls");
                 cout << "EDYCJA:" << endl;
-                adresaci.edytujDaneAdresata();
+                recipients.edytujDaneAdresata();
                 break;
             case '3':
                 system("cls");
@@ -79,7 +79,7 @@ int main() {
                 cout << "Podaj ID kontaktu ktory chcesz usunac: ";
                 id = liczba.wprowadzWartosc();
                 system("cls");
-                adresaci.usunAdresata(id);
+                recipients.usunAdresata(id);
                 break;
             case '4':
                 system("cls");
@@ -94,13 +94,13 @@ int main() {
                     system("cls");
                     cout << "Podaj szukane Imie: ";
                     cin >> szukanaWartosc;
-                    adresaci.wyszukajAdresataPoImieniu(szukanaWartosc);
+                    recipients.wyszukajAdresataPoImieniu(szukanaWartosc);
                     system("pause");
                 } else if(wybor == '2') {
                     system("cls");
                     cout << "Podaj szukane nazwisko: ";
                     cin >> szukanaWartosc;
-                    adresaci.wyszukajAdresataPoNazwisku(szukanaWartosc);
+                    recipients.wyszukajAdresataPoNazwisku(szukanaWartosc);
                     system("pause");
                 } else if(wybor == '9') {
                     break;
@@ -109,7 +109,7 @@ int main() {
                 break;
             case '5':
                 system("cls");
-                adresaci.wyswietlAdresatow();
+                recipients.wyswietlAdresatow();
                 system("pause");
                 break;
             case  '8':
@@ -122,7 +122,7 @@ int main() {
                 if(wybor == '1') {
                     uzytkownicy.changePassword(idLoggedUser);
                 } else if(wybor == '2') {
-                    adresaci.czyszczenieVektora();
+                    recipients.czyszczenieVektora();
                     idLoggedUser = 0;
                 } else if(wybor == '9') {
                     break;

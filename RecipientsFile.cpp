@@ -1,17 +1,17 @@
 #include "RecipientsFile.h"
 
-PlikAdresaci::PlikAdresaci()
-    :File("Adresaci.txt") {
-    fileName = "Adresaci.txt";
+RecipientsFile::RecipientsFile()
+    :File("Recipients.txt") {
+    fileName = "Recipients.txt";
 }
-PlikAdresaci::PlikAdresaci(string name)
+RecipientsFile::RecipientsFile(string name)
     :File(name) {
     fileName = name;
 }
 
-void PlikAdresaci::editRecord(Adresat adresat, int idLoggedUser) {
+void RecipientsFile::editRecord(Recipient recipient, int idLoggedUser) {
     string lineFromFile;
-    int idAdresata;
+    int recipientId;
     size_t separatorPositin;
     string copyFileName = "." + fileName;
     remove(copyFileName.c_str());
@@ -30,15 +30,15 @@ void PlikAdresaci::editRecord(Adresat adresat, int idLoggedUser) {
     while(getline(fileCopy, lineFromFile)) {
 
         separatorPositin = lineFromFile.find("|");
-        idAdresata = atoi(lineFromFile.substr(0, separatorPositin).c_str());
-        if (idAdresata == adresat.getId()) {
-            file << adresat.getId() << "|";
+        recipientId = atoi(lineFromFile.substr(0, separatorPositin).c_str());
+        if (recipientId == recipient.getId()) {
+            file << recipient.getId() << "|";
             file << idLoggedUser << "|";
-            file << adresat.getFirstName() << "|";
-            file << adresat.getLastName() << "|";
-            file << adresat.getPhoneNumber() << "|";
-            file << adresat.getEmail() << "|";
-            file << adresat.getAddress() << "|" << endl;
+            file << recipient.getFirstName() << "|";
+            file << recipient.getLastName() << "|";
+            file << recipient.getPhoneNumber() << "|";
+            file << recipient.getEmail() << "|";
+            file << recipient.getAddress() << "|" << endl;
         } else {
             file << lineFromFile << endl;
         }
@@ -47,9 +47,9 @@ void PlikAdresaci::editRecord(Adresat adresat, int idLoggedUser) {
     fileCopy.close();
 }
 
-int PlikAdresaci::usunRekord(Adresat adresat, int idLoggedUser) {
+int RecipientsFile::deleteRecord(Recipient recipient, int idLoggedUser) {
     string lineFromFile;
-    int idAdresata;
+    int recipientId;
     int idOstatniegoAdresataWPliku;
     size_t separatorPositin;
     string copyFileName = "." + fileName;
@@ -69,11 +69,11 @@ int PlikAdresaci::usunRekord(Adresat adresat, int idLoggedUser) {
     while(getline(fileCopy, lineFromFile)) {
 
         separatorPositin = lineFromFile.find("|");
-        idAdresata = atoi(lineFromFile.substr(0, separatorPositin).c_str());
+        recipientId = atoi(lineFromFile.substr(0, separatorPositin).c_str());
 
-        if (idAdresata == adresat.getId()) continue;
+        if (recipientId == recipient.getId()) continue;
         else {
-                idOstatniegoAdresataWPliku = idAdresata;
+                idOstatniegoAdresataWPliku = recipientId;
                 file << lineFromFile << endl;
         }
     }
@@ -82,7 +82,7 @@ int PlikAdresaci::usunRekord(Adresat adresat, int idLoggedUser) {
     return idOstatniegoAdresataWPliku;
 }
 
-void PlikAdresaci::addRecord(Adresat adresat,  int idLoggedUser) {
+void RecipientsFile::addRecord(Recipient recipient,  int idLoggedUser) {
     fstream file;
     file.open(fileName.c_str(), ios::out | ios::app);
     if(file.good() == false) {
@@ -90,17 +90,17 @@ void PlikAdresaci::addRecord(Adresat adresat,  int idLoggedUser) {
         return ;
     }
 
-    file << adresat.getId() << "|";
+    file << recipient.getId() << "|";
     file << idLoggedUser << "|";
-    file << adresat.getFirstName() << "|";
-    file << adresat.getLastName() << "|";
-    file << adresat.getPhoneNumber() << "|";
-    file << adresat.getEmail() << "|";
-    file << adresat.getAddress() << "|" << endl;
+    file << recipient.getFirstName() << "|";
+    file << recipient.getLastName() << "|";
+    file << recipient.getPhoneNumber() << "|";
+    file << recipient.getEmail() << "|";
+    file << recipient.getAddress() << "|" << endl;
     file.close();
 }
 
-int PlikAdresaci::loadAllRecords(vector<Adresat> & adresaci, int idLoggedUser) {
+int RecipientsFile::loadAllRecords(vector<Recipient> & recipients, int idLoggedUser) {
     string lineFromFile;
     int id;
     int idWlascicielaKontaktu;
@@ -154,9 +154,9 @@ int PlikAdresaci::loadAllRecords(vector<Adresat> & adresaci, int idLoggedUser) {
         charQuantity = separatorPositin - pozycjaZnakuOd;
         address = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
 
-        Adresat pojedynczyAdresat(id, firstName, lastName, phone, email, address);
+        Recipient pojedynczyAdresat(id, firstName, lastName, phone, email, address);
 
-        adresaci.push_back(pojedynczyAdresat);
+        recipients.push_back(pojedynczyAdresat);
     }
     plikAdresaci.close();
     return idOstatniegoAdresata;

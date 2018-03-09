@@ -10,20 +10,20 @@
 using namespace std;
 
 class KsiazkaAdresowa {
-    vector<Adresat> adresaci;
+    vector<Recipient> recipients;
     int idLoggedUser;
     int idOstatniegoAdresataWPliku;
 
     void wyswieltLinieOdzielajaca();
     void wyswietlNaglowekTabeli();
-    void wyswietlWierszTabeli(Adresat adresat);
+    void wyswietlWierszTabeli(Recipient recipient);
     void komunikatOilosciZnalezionychKontaktow(int iloscZnalezionychKontaktow, string szukanaWartosc);
 public:
     bool czyAresatOTakimIDistnieje(int id);
     KsiazkaAdresowa();
     KsiazkaAdresowa(int idLoggedUser);
     void wczytajKontaktyZPliku();
-    void dodajAdresata(Adresat adresat);
+    void dodajAdresata(Recipient recipient);
     void wpiszAdresata();
     int iloscAdresatow();
     int pobierzIdZalogowanegoUzytkownika();

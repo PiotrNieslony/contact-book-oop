@@ -1,9 +1,9 @@
 #include "Recipient.h"
 
-Adresat::Adresat(int sId, string sFirstName, string sLastName, string sPhone, string sEmail, string sAddress){
+Recipient::Recipient(int sId, string sFirstName, string sLastName, string sPhone, string sEmail, string sAddress){
     setAll(sId, sFirstName, sLastName, sPhone, sEmail, sAddress);
 }
-void  Adresat::setAll(int sId, string sFirstName, string sLastName, string sPhone, string sEmail, string sAddress){
+void  Recipient::setAll(int sId, string sFirstName, string sLastName, string sPhone, string sEmail, string sAddress){
     id = sId;
     firstName = sFirstName;
     lastName = sLastName;
@@ -12,25 +12,25 @@ void  Adresat::setAll(int sId, string sFirstName, string sLastName, string sPhon
     address = sAddress;
 }
 
-int Adresat::getId(){
+int Recipient::getId(){
     return id;
 }
-string Adresat::getFirstName(){
+string Recipient::getFirstName(){
     return firstName;
 }
 
-string Adresat::getLastName(){
+string Recipient::getLastName(){
     return lastName;
 }
 
-string Adresat::getPhoneNumber(){
+string Recipient::getPhoneNumber(){
     return phone;
 }
 
-string Adresat::getEmail(){
+string Recipient::getEmail(){
     return email;
 }
 
-string Adresat::getAddress(){
+string Recipient::getAddress(){
     return address;
 }
