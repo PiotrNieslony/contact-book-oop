@@ -34,11 +34,11 @@ void PlikAdresaci::editRecord(Adresat adresat, int idLoggedUser) {
         if (idAdresata == adresat.getId()) {
             file << adresat.getId() << "|";
             file << idLoggedUser << "|";
-            file << adresat.pobierzImie() << "|";
-            file << adresat.pobierzNazwisko() << "|";
-            file << adresat.pobierzTelefon() << "|";
-            file << adresat.pobierzEmail() << "|";
-            file << adresat.pobierzAdres() << "|" << endl;
+            file << adresat.getFirstName() << "|";
+            file << adresat.getLastName() << "|";
+            file << adresat.getPhoneNumber() << "|";
+            file << adresat.getEmail() << "|";
+            file << adresat.getAddress() << "|" << endl;
         } else {
             file << lineFromFile << endl;
         }
@@ -92,11 +92,11 @@ void PlikAdresaci::addRecord(Adresat adresat,  int idLoggedUser) {
 
     file << adresat.getId() << "|";
     file << idLoggedUser << "|";
-    file << adresat.pobierzImie() << "|";
-    file << adresat.pobierzNazwisko() << "|";
-    file << adresat.pobierzTelefon() << "|";
-    file << adresat.pobierzEmail() << "|";
-    file << adresat.pobierzAdres() << "|" << endl;
+    file << adresat.getFirstName() << "|";
+    file << adresat.getLastName() << "|";
+    file << adresat.getPhoneNumber() << "|";
+    file << adresat.getEmail() << "|";
+    file << adresat.getAddress() << "|" << endl;
     file.close();
 }
 
@@ -105,7 +105,7 @@ int PlikAdresaci::loadAllRecords(vector<Adresat> & adresaci, int idLoggedUser) {
     int id;
     int idWlascicielaKontaktu;
     int idOstatniegoAdresata;
-    string imie, nazwisko, telefon, email, adres;
+    string firstName, lastName, phone, email, address;
     fstream plikAdresaci;
     size_t pozycjaZnakuOd;
     size_t separatorPositin;
@@ -132,17 +132,17 @@ int PlikAdresaci::loadAllRecords(vector<Adresat> & adresaci, int idLoggedUser) {
         pozycjaZnakuOd = separatorPositin+1;
         separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
         charQuantity = separatorPositin - pozycjaZnakuOd;
-        imie = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
+        firstName = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
 
         pozycjaZnakuOd = separatorPositin+1;
         separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
         charQuantity = separatorPositin - pozycjaZnakuOd;
-        nazwisko = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
+        lastName = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
 
         pozycjaZnakuOd = separatorPositin+1;
         separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
         charQuantity = separatorPositin - pozycjaZnakuOd;
-        telefon = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
+        phone = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
 
         pozycjaZnakuOd = separatorPositin+1;
         separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
@@ -152,9 +152,9 @@ int PlikAdresaci::loadAllRecords(vector<Adresat> & adresaci, int idLoggedUser) {
         pozycjaZnakuOd = separatorPositin+1;
         separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
         charQuantity = separatorPositin - pozycjaZnakuOd;
-        adres = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
+        address = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
 
-        Adresat pojedynczyAdresat(id, imie, nazwisko, telefon, email, adres);
+        Adresat pojedynczyAdresat(id, firstName, lastName, phone, email, address);
 
         adresaci.push_back(pojedynczyAdresat);
     }

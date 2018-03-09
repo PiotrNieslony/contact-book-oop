@@ -1,36 +1,36 @@
 #include "Recipient.h"
 
-Adresat::Adresat(int sId, string sImie, string sNazwisko, string sTelefon, string sEmail, string sAdres){
-    setAll(sId, sImie, sNazwisko, sTelefon, sEmail, sAdres);
+Adresat::Adresat(int sId, string sFirstName, string sLastName, string sPhone, string sEmail, string sAddress){
+    setAll(sId, sFirstName, sLastName, sPhone, sEmail, sAddress);
 }
-void  Adresat::setAll(int sId, string sImie, string sNazwisko, string sTelefon, string sEmail, string sAdres){
+void  Adresat::setAll(int sId, string sFirstName, string sLastName, string sPhone, string sEmail, string sAddress){
     id = sId;
-    imie = sImie;
-    nazwisko = sNazwisko;
-    telefon = sTelefon;
+    firstName = sFirstName;
+    lastName = sLastName;
+    phone = sPhone;
     email = sEmail;
-    adres = sAdres;
+    address = sAddress;
 }
 
 int Adresat::getId(){
     return id;
 }
-string Adresat::pobierzImie(){
-    return imie;
+string Adresat::getFirstName(){
+    return firstName;
 }
 
-string Adresat::pobierzNazwisko(){
-    return nazwisko;
+string Adresat::getLastName(){
+    return lastName;
 }
 
-string Adresat::pobierzTelefon(){
-    return telefon;
+string Adresat::getPhoneNumber(){
+    return phone;
 }
 
-string Adresat::pobierzEmail(){
+string Adresat::getEmail(){
     return email;
 }
 
-string Adresat::pobierzAdres(){
-    return adres;
+string Adresat::getAddress(){
+    return address;
 }

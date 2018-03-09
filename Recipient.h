@@ -2,21 +2,21 @@
 
 using namespace std;
 
-#ifndef ADRESAT_H
-#define ADRESAT_H
+#ifndef RECIPIENT_H
+#define RECIPIENT_H
 
 class Adresat{
     int id;
-    string imie, nazwisko, telefon, email, adres;
+    string firstName, lastName, phone, email, address;
 public:
-    Adresat(int sId, string sImie, string sNazwisko, string sTelefon, string sEmail, string sAdres);
-    void setAll(int sId, string sImie, string sNazwisko, string sTelefon, string sEmail, string sAdres);
+    Adresat(int sId, string sFirstName, string sLastName, string sPhone, string sEmail, string sAddress);
+    void setAll(int sId, string sFirstName, string sLastName, string sPhone, string sEmail, string sAddress);
     int getId();
-    string pobierzImie();
-    string pobierzNazwisko();
-    string pobierzTelefon();
-    string pobierzEmail();
-    string pobierzAdres();
+    string getFirstName();
+    string getLastName();
+    string getPhoneNumber();
+    string getEmail();
+    string getAddress();
 };
 
 #endif

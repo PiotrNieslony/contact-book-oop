@@ -4,7 +4,7 @@
 #include <vector>
 #include "Recipient.h"
 #include "File.h"
-#include "ConsolMessage.h"
+#include "ConsoleMessage.h"
 
 #ifndef RECIPIENTS_FILE_H
 #define RECIPIENTS_FILE_H

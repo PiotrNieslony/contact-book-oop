@@ -2,7 +2,7 @@
 #include <vector>
 #include <windows.h>
 #include <cstdio>
-#include "ConsolMessage.h"
+#include "ConsoleMessage.h"
 #include "Recipient.h"
 #include "RecipientsFile.h"
 #include "GetInt.h"
@@ -29,8 +29,8 @@ public:
     int pobierzIdZalogowanegoUzytkownika();
     int ustawIdZalogowanegoUzytkownika(int id);
     void wyswietlAdresatow();
-    void wyszukajAdresataPoImieniu(string imie);
-    void wyszukajAdresataPoNazwisku(string nazwisko);
+    void wyszukajAdresataPoImieniu(string firstName);
+    void wyszukajAdresataPoNazwisku(string lastName);
     void edytujDaneAdresata();
     void usunAdresata(int id);
     void czyszczenieVektora();

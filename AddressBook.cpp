@@ -17,11 +17,11 @@ void KsiazkaAdresowa::wyswietlNaglowekTabeli() {
 void KsiazkaAdresowa::wyswietlWierszTabeli(Adresat adresat) {
     printf ("|%-3i|%-12s|%-12s|%-11s|%-30s|%-45s|\n",
             adresat.getId(),
-            adresat.pobierzImie().c_str(),
-            adresat.pobierzNazwisko().c_str(),
-            adresat.pobierzTelefon().c_str(),
-            adresat.pobierzEmail().c_str(),
-            adresat.pobierzAdres().c_str());
+            adresat.getFirstName().c_str(),
+            adresat.getLastName().c_str(),
+            adresat.getPhoneNumber().c_str(),
+            adresat.getEmail().c_str(),
+            adresat.getAddress().c_str());
 }
 
 void KsiazkaAdresowa::komunikatOilosciZnalezionychKontaktow(int iloscZnalezionychKontaktow, string szukanaWartosc) {
@@ -79,24 +79,24 @@ void KsiazkaAdresowa::dodajAdresata(Adresat adresat) {
 
 void KsiazkaAdresowa::wpiszAdresata() {
     int id;
-    string imie, nazwisko, telefon, email, adres;
+    string firstName, lastName, phone, email, address;
 
     system("cls");
     id = idOstatniegoAdresataWPliku + 1;
     cout << "Podaj imie: ";
-    cin >> imie;
+    cin >> firstName;
     cout << "Podaj nazwisko: ";
-    cin >> nazwisko;
+    cin >> lastName;
     cout << "Podaj nr. telefonu: ";
     cin.sync();
-    getline(cin, telefon);
+    getline(cin, phone);
     cout << "Podaj adres email: ";
     cin >> email;
     cout << "Podaj adres: ";
     cin.sync();
-    getline(cin, adres);
+    getline(cin, address);
 
-    Adresat adresat(id, imie, nazwisko, telefon, email, adres);
+    Adresat adresat(id, firstName, lastName, phone, email, address);
     dodajAdresata(adresat);
     idOstatniegoAdresataWPliku++;
     ConsoleMessage message("Super, dodales nowe dane kontaktowe.");
@@ -129,7 +129,7 @@ void KsiazkaAdresowa::wyszukajAdresataPoImieniu(string szukanaWartosc) {
     wyswietlNaglowekTabeli();
     vector<Adresat>::iterator vectorEnd = adresaci.end();
     for(vector<Adresat>::iterator itr = adresaci.begin(); itr != vectorEnd; ++itr) {
-        if((*itr).pobierzImie() == szukanaWartosc) {
+        if((*itr).getFirstName() == szukanaWartosc) {
             wyswietlWierszTabeli(*itr);
             iloscZnalezionychKontaktow++;
         }
@@ -143,7 +143,7 @@ void KsiazkaAdresowa::wyszukajAdresataPoNazwisku(string szukanaWartosc) {
     wyswietlNaglowekTabeli();
     vector<Adresat>::iterator vectorEnd = adresaci.end();
     for(vector<Adresat>::iterator itr = adresaci.begin(); itr != vectorEnd; ++itr) {
-        if((*itr).pobierzNazwisko() == szukanaWartosc) {
+        if((*itr).getLastName() == szukanaWartosc) {
             wyswietlWierszTabeli(*itr);
             iloscZnalezionychKontaktow++;
         }
@@ -155,7 +155,7 @@ void KsiazkaAdresowa::wyszukajAdresataPoNazwisku(string szukanaWartosc) {
 void KsiazkaAdresowa::edytujDaneAdresata() {
     int id;
     char wybor;
-    string imie, nazwisko, telefon, email, adres;
+    string firstName, lastName, phone, email, address;
     ConsoleMessage message;
     message.setText("Dane zostaly zmienione.");
     PlikAdresaci file;
@@ -169,11 +169,11 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
     for(vector<Adresat>::iterator itr = adresaci.begin(); itr != vectorEnd; ++itr) {
         if((*itr).getId() == id) {
 
-            imie = (*itr).pobierzImie();
-            nazwisko = (*itr).pobierzNazwisko();
-            telefon = (*itr).pobierzTelefon();
-            email = (*itr).pobierzEmail();
-            adres = (*itr).pobierzAdres();
+            firstName = (*itr).getFirstName();
+            lastName = (*itr).getLastName();
+            phone = (*itr).getPhoneNumber();
+            email = (*itr).getEmail();
+            address = (*itr).getAddress();
 
             wyswietlNaglowekTabeli();
             wyswietlWierszTabeli(*itr);
@@ -198,55 +198,55 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
                 switch(wybor) {
                 case '1':
                     cout << "Wprowadz imie: ";
-                    cin >> imie;
-                    (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
+                    cin >> firstName;
+                    (*itr).setAll(id, firstName, lastName, phone, email, address);
                     file.editRecord(*itr, idLoggedUser);
                     message.display();
                     return;
                 case '2':
                     cout << "Wprowadz nazwisko: ";
-                    cin >> nazwisko;
-                    (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
+                    cin >> lastName;
+                    (*itr).setAll(id, firstName, lastName, phone, email, address);
                     file.editRecord(*itr, idLoggedUser);
                     message.display();
                     return;
                 case 3:
                     cout << "Wprowadz telefon: ";
                     cin.sync();
-                    getline(cin, telefon);
-                    (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
+                    getline(cin, phone);
+                    (*itr).setAll(id, firstName, lastName, phone, email, address);
                     file.editRecord(*itr, idLoggedUser);
                     message.display();
                     return;
                 case '4':
                     cout << "Wprowadz emial: ";
                     cin >> email;
-                    (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
+                    (*itr).setAll(id, firstName, lastName, phone, email, address);
                     file.editRecord(*itr, idLoggedUser);
                     message.display();
                     return;
                 case '5':
                     cout << "Wprowadz adres: ";
                     cin.sync();
-                    getline(cin, adres);
-                    (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
+                    getline(cin, address);
+                    (*itr).setAll(id, firstName, lastName, phone, email, address);
                     file.editRecord(*itr, idLoggedUser);
                     message.display();
                     return;
                 case '6':
                     cout << "Wprowadz imie: ";
-                    cin >> imie;
+                    cin >> firstName;
                     cout << "Wprowadz nazwisko: ";
-                    cin >> nazwisko;
+                    cin >> lastName;
                     cout << "Wprowadz telefon: ";
                     cin.sync();
-                    getline(cin, telefon);
+                    getline(cin, phone);
                     cout << "Wprowadz emial: ";
                     cin >> email;
                     cout << "Wprowadz adres: ";
                     cin.sync();
-                    getline(cin,adres);
-                    (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
+                    getline(cin,address);
+                    (*itr).setAll(id, firstName, lastName, phone, email, address);
                     file.editRecord(*itr, idLoggedUser);
                     message.display();
 
