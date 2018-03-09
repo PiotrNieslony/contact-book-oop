@@ -1,9 +1,9 @@
 #include <iostream>
-#include "Uzytkownicy.h"
-#include "PlikUzytkownicy.h"
-#include "KsiazkaAdresowa.h"
-#include "Komunikat.h"
-#include "PobierzLiczbeCalkowita.h"
+#include "Users.h"
+#include "UsersFile.h"
+#include "AddressBook.h"
+#include "ConsolMessage.h"
+#include "GetInt.h"
 
 using namespace std;
 
