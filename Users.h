@@ -7,16 +7,16 @@
 
 using namespace std;
 
-class Uzytkownicy {
+class Users {
     vector<User> listOfUser;
 
-    void dodajUzytkownika(User user);
-    int idOstatniegoUzytkownika();
+    void addUser(User user);
+    int idOfLastUser();
 public:
-    Uzytkownicy();
-    void wyswietlUzytkownikow();
-    int iloscZarejestrowanychUzytkownikow();
-    int logowanie();
-    void rejestracja();
-    void changePassword(int idZalogowanegoUzytkownika);
+    Users();
+    void displayUsers();
+    int numberOfRegisteredUsers();
+    int logIn();
+    void singUp();
+    void changePassword(int idLoggedUser);
 };

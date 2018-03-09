@@ -15,10 +15,10 @@ class PlikAdresaci :public File {
 public:
     PlikAdresaci();
     PlikAdresaci(string name);
-    void editRecord(Adresat adresat, int idZalogowanegoUzytkownika);
-    int usunRekord(Adresat adresat, int idZalogowanegoUzytkownika);
-    void addRecord(Adresat adresat, int idZalogowanegoUzytkownika);
-    int loadAllRecords(vector<Adresat> & adresaci, int idZalogowanegoUzytkownika);
+    void editRecord(Adresat adresat, int idLoggedUser);
+    int usunRekord(Adresat adresat, int idLoggedUser);
+    void addRecord(Adresat adresat, int idLoggedUser);
+    int loadAllRecords(vector<Adresat> & adresaci, int idLoggedUser);
 };
 
 #endif

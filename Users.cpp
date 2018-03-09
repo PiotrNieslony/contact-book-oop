@@ -5,16 +5,16 @@
 
 using namespace std;
 
-Uzytkownicy::Uzytkownicy(){
+Users::Users(){
     UsersFile usersFile;
     usersFile.loadAllRecords(listOfUser);
 }
 
-void Uzytkownicy::dodajUzytkownika(User user) {
+void Users::addUser(User user) {
     listOfUser.push_back(user);
 }
 
-void Uzytkownicy::wyswietlUzytkownikow() {
+void Users::displayUsers() {
     system("cls");
     vector<User>::iterator koniec = listOfUser.end();
     for(vector<User>::iterator itr = listOfUser.begin(); itr != koniec; ++itr) {
@@ -23,11 +23,11 @@ void Uzytkownicy::wyswietlUzytkownikow() {
     system("pause");
 }
 
-int Uzytkownicy::iloscZarejestrowanychUzytkownikow(){
+int Users::numberOfRegisteredUsers(){
     return listOfUser.size();
 }
 
-int Uzytkownicy::idOstatniegoUzytkownika() {
+int Users::idOfLastUser() {
     if (listOfUser.size() == 0) return 0;
     vector<User>::iterator ostatniUzytkownik = listOfUser.end();
     --ostatniUzytkownik;
@@ -36,7 +36,7 @@ int Uzytkownicy::idOstatniegoUzytkownika() {
 }
 
 
-void Uzytkownicy::rejestracja() {
+void Users::singUp() {
     UsersFile file;
     string name, password;
     cout << "Podaj nazwe uzytkownika: ";
@@ -52,14 +52,14 @@ void Uzytkownicy::rejestracja() {
     cout << "Podaj haslo: ";
     cin >> password;
 
-    User singleUser(idOstatniegoUzytkownika() + 1, name, password);
-    dodajUzytkownika(singleUser);
+    User singleUser(idOfLastUser() + 1, name, password);
+    addUser(singleUser);
 
     UsersFile usersFile();
     file.addRecord(singleUser);
 }
 
-int Uzytkownicy::logowanie() {
+int Users::logIn() {
     Komunikat komunikat;
     string name, password;
     cout << "Podaj nazwe:  ";
@@ -84,12 +84,12 @@ int Uzytkownicy::logowanie() {
     return 0;
 }
 
-void Uzytkownicy::changePassword(int idZalogowanegoUzytkownika) {
+void Users::changePassword(int idLoggedUser) {
     string password;
     UsersFile file;
     vector<User>::iterator koniec = listOfUser.end();
     for(vector<User>::iterator itr = listOfUser.begin(); itr != koniec; ++itr) {
-        if((*itr).getId() == idZalogowanegoUzytkownika) {
+        if((*itr).getId() == idLoggedUser) {
             cout << "Wprawadz nowe haslo: ";
             cin >> password;
             (*itr).changePassword(password);

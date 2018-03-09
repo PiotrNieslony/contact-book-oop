@@ -11,20 +11,20 @@ void naglowekAplikacji ();
 
 int main() {
     char wybor;
-    int idZalogowanegoUzytkownika = 0;
+    int idLoggedUser = 0;
     int id = 0;
     string szukanaWartosc;
-    Uzytkownicy uzytkownicy;
+    Users uzytkownicy;
     KsiazkaAdresowa adresaci;
     Komunikat komunikat;
     PobierzLiczbeCalkowita liczba;
 
     while(true) {
-        if( idZalogowanegoUzytkownika == 0) {
+        if( idLoggedUser == 0) {
             system("cls");
             naglowekAplikacji();
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),11);
-            cout << "Ilosc zarejestrowanych uzytkownikow: " << uzytkownicy.iloscZarejestrowanychUzytkownikow() << endl << endl;
+            cout << "Ilosc zarejestrowanych uzytkownikow: " << uzytkownicy.numberOfRegisteredUsers() << endl << endl;
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),15);
             cout << "1. Rejestracja" << endl;
             cout << "2. Logownaie" << endl;
@@ -35,13 +35,13 @@ int main() {
             cin.sync();
 
             if(wybor == '1') {
-                uzytkownicy.rejestracja();
+                uzytkownicy.singUp();
             } else if(wybor == '2')     {
-                idZalogowanegoUzytkownika = uzytkownicy.logowanie();
-                adresaci.ustawIdZalogowanegoUzytkownika(idZalogowanegoUzytkownika);
+                idLoggedUser = uzytkownicy.logIn();
+                adresaci.ustawIdZalogowanegoUzytkownika(idLoggedUser);
                 adresaci.wczytajKontaktyZPliku();
             } else if(wybor == '3') {
-                uzytkownicy.wyswietlUzytkownikow();
+                uzytkownicy.displayUsers();
             } else if(wybor == '9') {
                 exit(0);
             }
@@ -120,10 +120,10 @@ int main() {
                 cin >> wybor;
                 cin.sync();
                 if(wybor == '1') {
-                    uzytkownicy.changePassword(idZalogowanegoUzytkownika);
+                    uzytkownicy.changePassword(idLoggedUser);
                 } else if(wybor == '2') {
                     adresaci.czyszczenieVektora();
-                    idZalogowanegoUzytkownika = 0;
+                    idLoggedUser = 0;
                 } else if(wybor == '9') {
                     break;
                 }

@@ -60,21 +60,21 @@ KsiazkaAdresowa::KsiazkaAdresowa() {
 }
 
 KsiazkaAdresowa::KsiazkaAdresowa(int id) {
-    idZalogowanegoUzytkownika = id;
+    idLoggedUser = id;
     PlikAdresaci plikAdresaci;
-    idOstatniegoAdresataWPliku = plikAdresaci.loadAllRecords(adresaci, idZalogowanegoUzytkownika);
+    idOstatniegoAdresataWPliku = plikAdresaci.loadAllRecords(adresaci, idLoggedUser);
 }
 
 void KsiazkaAdresowa::wczytajKontaktyZPliku() {
     PlikAdresaci plikAdresaci;
     if(plikAdresaci.isFileEmpty()) idOstatniegoAdresataWPliku = 0;
-    else idOstatniegoAdresataWPliku = plikAdresaci.loadAllRecords(adresaci, idZalogowanegoUzytkownika);
+    else idOstatniegoAdresataWPliku = plikAdresaci.loadAllRecords(adresaci, idLoggedUser);
 }
 
 void KsiazkaAdresowa::dodajAdresata(Adresat adresat) {
     adresaci.push_back(adresat);
     PlikAdresaci plikAdresaci;
-    plikAdresaci.addRecord(adresat, idZalogowanegoUzytkownika);
+    plikAdresaci.addRecord(adresat, idLoggedUser);
 }
 
 void KsiazkaAdresowa::wpiszAdresata() {
@@ -107,11 +107,11 @@ int KsiazkaAdresowa::iloscAdresatow() {
 }
 
 int KsiazkaAdresowa::pobierzIdZalogowanegoUzytkownika() {
-    return idZalogowanegoUzytkownika;
+    return idLoggedUser;
 }
 
 int KsiazkaAdresowa::ustawIdZalogowanegoUzytkownika(int id) {
-    idZalogowanegoUzytkownika = id;
+    idLoggedUser = id;
 }
 
 void KsiazkaAdresowa::wyswietlAdresatow() {
@@ -200,14 +200,14 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
                     cout << "Wprowadz imie: ";
                     cin >> imie;
                     (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
-                    file.editRecord(*itr, idZalogowanegoUzytkownika);
+                    file.editRecord(*itr, idLoggedUser);
                     komunikat.wyswietl();
                     return;
                 case '2':
                     cout << "Wprowadz nazwisko: ";
                     cin >> nazwisko;
                     (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
-                    file.editRecord(*itr, idZalogowanegoUzytkownika);
+                    file.editRecord(*itr, idLoggedUser);
                     komunikat.wyswietl();
                     return;
                 case 3:
@@ -215,14 +215,14 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
                     cin.sync();
                     getline(cin, telefon);
                     (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
-                    file.editRecord(*itr, idZalogowanegoUzytkownika);
+                    file.editRecord(*itr, idLoggedUser);
                     komunikat.wyswietl();
                     return;
                 case '4':
                     cout << "Wprowadz emial: ";
                     cin >> email;
                     (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
-                    file.editRecord(*itr, idZalogowanegoUzytkownika);
+                    file.editRecord(*itr, idLoggedUser);
                     komunikat.wyswietl();
                     return;
                 case '5':
@@ -230,7 +230,7 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
                     cin.sync();
                     getline(cin, adres);
                     (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
-                    file.editRecord(*itr, idZalogowanegoUzytkownika);
+                    file.editRecord(*itr, idLoggedUser);
                     komunikat.wyswietl();
                     return;
                 case '6':
@@ -247,7 +247,7 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
                     cin.sync();
                     getline(cin,adres);
                     (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
-                    file.editRecord(*itr, idZalogowanegoUzytkownika);
+                    file.editRecord(*itr, idLoggedUser);
                     komunikat.wyswietl();
 
                     return;
@@ -275,7 +275,7 @@ void KsiazkaAdresowa::usunAdresata(int id) {
             cin >> wybor;
             if(wybor  == 't' || wybor  == 'T') {
                 PlikAdresaci file;
-                idOstatniegoAdresataWPliku = file.usunRekord(*itr, idZalogowanegoUzytkownika);
+                idOstatniegoAdresataWPliku = file.usunRekord(*itr, idLoggedUser);
                 adresaci.erase(itr);
                 if(file.isFileEmpty()) idOstatniegoAdresataWPliku = 0;
                 Komunikat komunikat("Kontakt zostal usuniety.");

@@ -11,7 +11,7 @@ using namespace std;
 
 class KsiazkaAdresowa {
     vector<Adresat> adresaci;
-    int idZalogowanegoUzytkownika;
+    int idLoggedUser;
     int idOstatniegoAdresataWPliku;
 
     void wyswieltLinieOdzielajaca();
@@ -21,7 +21,7 @@ class KsiazkaAdresowa {
 public:
     bool czyAresatOTakimIDistnieje(int id);
     KsiazkaAdresowa();
-    KsiazkaAdresowa(int idZalogowanegoUzytkownika);
+    KsiazkaAdresowa(int idLoggedUser);
     void wczytajKontaktyZPliku();
     void dodajAdresata(Adresat adresat);
     void wpiszAdresata();

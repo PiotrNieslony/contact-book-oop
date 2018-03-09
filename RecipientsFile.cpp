@@ -9,7 +9,7 @@ PlikAdresaci::PlikAdresaci(string name)
     fileName = name;
 }
 
-void PlikAdresaci::editRecord(Adresat adresat, int idZalogowanegoUzytkownika) {
+void PlikAdresaci::editRecord(Adresat adresat, int idLoggedUser) {
     string lineFromFile;
     int idAdresata;
     size_t separatorPositin;
@@ -33,7 +33,7 @@ void PlikAdresaci::editRecord(Adresat adresat, int idZalogowanegoUzytkownika) {
         idAdresata = atoi(lineFromFile.substr(0, separatorPositin).c_str());
         if (idAdresata == adresat.getId()) {
             file << adresat.getId() << "|";
-            file << idZalogowanegoUzytkownika << "|";
+            file << idLoggedUser << "|";
             file << adresat.pobierzImie() << "|";
             file << adresat.pobierzNazwisko() << "|";
             file << adresat.pobierzTelefon() << "|";
@@ -47,7 +47,7 @@ void PlikAdresaci::editRecord(Adresat adresat, int idZalogowanegoUzytkownika) {
     fileCopy.close();
 }
 
-int PlikAdresaci::usunRekord(Adresat adresat, int idZalogowanegoUzytkownika) {
+int PlikAdresaci::usunRekord(Adresat adresat, int idLoggedUser) {
     string lineFromFile;
     int idAdresata;
     int idOstatniegoAdresataWPliku;
@@ -82,7 +82,7 @@ int PlikAdresaci::usunRekord(Adresat adresat, int idZalogowanegoUzytkownika) {
     return idOstatniegoAdresataWPliku;
 }
 
-void PlikAdresaci::addRecord(Adresat adresat,  int idZalogowanegoUzytkownika) {
+void PlikAdresaci::addRecord(Adresat adresat,  int idLoggedUser) {
     fstream file;
     file.open(fileName.c_str(), ios::out | ios::app);
     if(file.good() == false) {
@@ -91,7 +91,7 @@ void PlikAdresaci::addRecord(Adresat adresat,  int idZalogowanegoUzytkownika) {
     }
 
     file << adresat.getId() << "|";
-    file << idZalogowanegoUzytkownika << "|";
+    file << idLoggedUser << "|";
     file << adresat.pobierzImie() << "|";
     file << adresat.pobierzNazwisko() << "|";
     file << adresat.pobierzTelefon() << "|";
@@ -100,7 +100,7 @@ void PlikAdresaci::addRecord(Adresat adresat,  int idZalogowanegoUzytkownika) {
     file.close();
 }
 
-int PlikAdresaci::loadAllRecords(vector<Adresat> & adresaci, int idZalogowanegoUzytkownika) {
+int PlikAdresaci::loadAllRecords(vector<Adresat> & adresaci, int idLoggedUser) {
     string lineFromFile;
     int id;
     int idWlascicielaKontaktu;
@@ -127,7 +127,7 @@ int PlikAdresaci::loadAllRecords(vector<Adresat> & adresaci, int idZalogowanegoU
         separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
         charQuantity = separatorPositin - pozycjaZnakuOd;
         idWlascicielaKontaktu = atoi(lineFromFile.substr(pozycjaZnakuOd, charQuantity).c_str());
-        if(idWlascicielaKontaktu != idZalogowanegoUzytkownika) continue;
+        if(idWlascicielaKontaktu != idLoggedUser) continue;
 
         pozycjaZnakuOd = separatorPositin+1;
         separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
