@@ -67,7 +67,7 @@ KsiazkaAdresowa::KsiazkaAdresowa(int id) {
 
 void KsiazkaAdresowa::wczytajKontaktyZPliku() {
     PlikAdresaci plikAdresaci;
-    if(plikAdresaci.czyPlikJestPusty()) idOstatniegoAdresataWPliku = 0;
+    if(plikAdresaci.isFileEmpty()) idOstatniegoAdresataWPliku = 0;
     else idOstatniegoAdresataWPliku = plikAdresaci.loadAllRecords(adresaci, idZalogowanegoUzytkownika);
 }
 
@@ -277,7 +277,7 @@ void KsiazkaAdresowa::usunAdresata(int id) {
                 PlikAdresaci file;
                 idOstatniegoAdresataWPliku = file.usunRekord(*itr, idZalogowanegoUzytkownika);
                 adresaci.erase(itr);
-                if(file.czyPlikJestPusty()) idOstatniegoAdresataWPliku = 0;
+                if(file.isFileEmpty()) idOstatniegoAdresataWPliku = 0;
                 Komunikat komunikat("Kontakt zostal usuniety.");
                 return;
             } else {

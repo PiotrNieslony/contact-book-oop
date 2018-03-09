@@ -3,15 +3,15 @@
 
 using namespace std;
 
-#ifndef PLIK_H
-#define PLIK_H
+#ifndef FILE_H
+#define FILE_H
 
 class File {
 protected:
     string fileName;
 public:
     File(string name);
-    bool czyPlikJestPusty();
+    bool isFileEmpty();
 };
 
 #endif

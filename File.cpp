@@ -8,7 +8,7 @@ File::File(string name) {
     fileName = name;
 }
 
-bool File::czyPlikJestPusty() {
+bool File::isFileEmpty() {
     ifstream file (fileName.c_str(), ifstream::in);
     return file.peek() == ifstream::traits_type::eof();
 }
