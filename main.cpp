@@ -120,7 +120,7 @@ int main() {
                 cin >> wybor;
                 cin.sync();
                 if(wybor == '1') {
-                    uzytkownicy.zmienHaslo(idZalogowanegoUzytkownika);
+                    uzytkownicy.changePassword(idZalogowanegoUzytkownika);
                 } else if(wybor == '2') {
                     adresaci.czyszczenieVektora();
                     idZalogowanegoUzytkownika = 0;

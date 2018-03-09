@@ -13,10 +13,10 @@ using namespace std;
 class PlikUzytkownicy :public Plik {
 public:
     PlikUzytkownicy();
-    PlikUzytkownicy(string nazwa);
-    void edytujRekord(Uzytkownik uzytkownik);
-    void dodajNowyRekord(Uzytkownik uzytkownik);
-    void wczytajRekordy(vector<Uzytkownik> & uzytkownicyLista);
+    PlikUzytkownicy(string name);
+    void edytujRekord(User uzytkownik);
+    void dodajNowyRekord(User uzytkownik);
+    void wczytajRekordy(vector<User> & uzytkownicyLista);
 };
 
 #endif

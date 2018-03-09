@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Plik::Plik(string nazwa) {
-    nazwaPliku = nazwa;
+Plik::Plik(string name) {
+    nazwaPliku = name;
 }
 
 bool Plik::czyPlikJestPusty() {

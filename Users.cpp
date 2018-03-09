@@ -10,15 +10,15 @@ Uzytkownicy::Uzytkownicy(){
     plikUzytkownicy.wczytajRekordy(uzytkownicyLista);
 }
 
-void Uzytkownicy::dodajUzytkownika(Uzytkownik uzytkownik) {
+void Uzytkownicy::dodajUzytkownika(User uzytkownik) {
     uzytkownicyLista.push_back(uzytkownik);
 }
 
 void Uzytkownicy::wyswietlUzytkownikow() {
     system("cls");
-    vector<Uzytkownik>::iterator koniec = uzytkownicyLista.end();
-    for(vector<Uzytkownik>::iterator itr = uzytkownicyLista.begin(); itr != koniec; ++itr) {
-        cout << " ~ " << (*itr).pobierzNazwe() << endl;
+    vector<User>::iterator koniec = uzytkownicyLista.end();
+    for(vector<User>::iterator itr = uzytkownicyLista.begin(); itr != koniec; ++itr) {
+        cout << " ~ " << (*itr).getName() << endl;
     }
     system("pause");
 }
@@ -29,30 +29,30 @@ int Uzytkownicy::iloscZarejestrowanychUzytkownikow(){
 
 int Uzytkownicy::idOstatniegoUzytkownika() {
     if (uzytkownicyLista.size() == 0) return 0;
-    vector<Uzytkownik>::iterator ostatniUzytkownik = uzytkownicyLista.end();
+    vector<User>::iterator ostatniUzytkownik = uzytkownicyLista.end();
     --ostatniUzytkownik;
-    return (*ostatniUzytkownik).pobierzId();
+    return (*ostatniUzytkownik).getId();
 
 }
 
 
 void Uzytkownicy::rejestracja() {
     PlikUzytkownicy plik;
-    string nazwa, haslo;
+    string name, password;
     cout << "Podaj nazwe uzytkownika: ";
-    cin >> nazwa;
-    vector<Uzytkownik>::iterator koniec = uzytkownicyLista.end();
-    for(vector<Uzytkownik>::iterator itr = uzytkownicyLista.begin(); itr != koniec; ++itr) {
-        if((*itr).pobierzNazwe() == nazwa) {
+    cin >> name;
+    vector<User>::iterator koniec = uzytkownicyLista.end();
+    for(vector<User>::iterator itr = uzytkownicyLista.begin(); itr != koniec; ++itr) {
+        if((*itr).getName() == name) {
             cout << "Taki uzytkownik juz istnieje. Wpisz inna nazwe uzytkownika: ";
-            cin >> nazwa;
+            cin >> name;
             itr = uzytkownicyLista.begin();
         }
     }
     cout << "Podaj haslo: ";
-    cin >> haslo;
+    cin >> password;
 
-    Uzytkownik pojedynczyUzytkownik(idOstatniegoUzytkownika() + 1, nazwa, haslo);
+    User pojedynczyUzytkownik(idOstatniegoUzytkownika() + 1, name, password);
     dodajUzytkownika(pojedynczyUzytkownik);
 
     PlikUzytkownicy plikUzytkownicy();
@@ -61,38 +61,38 @@ void Uzytkownicy::rejestracja() {
 
 int Uzytkownicy::logowanie() {
     Komunikat komunikat;
-    string nazwa, haslo;
+    string name, password;
     cout << "Podaj nazwe:  ";
-    cin >> nazwa;
-    vector<Uzytkownik>::iterator koniec = uzytkownicyLista.end();
-    for(vector<Uzytkownik>::iterator itr = uzytkownicyLista.begin(); itr != koniec; ++itr) {
-        if((*itr).pobierzNazwe() == nazwa) {
+    cin >> name;
+    vector<User>::iterator koniec = uzytkownicyLista.end();
+    for(vector<User>::iterator itr = uzytkownicyLista.begin(); itr != koniec; ++itr) {
+        if((*itr).getName() == name) {
             for(int j=3; j>0; j--) {
                 cout << "Podaj haslo. pozostalo prob " << j << ": ";
-                cin >> haslo;
-                if ((*itr).sprawdzHaslo(haslo)) {
+                cin >> password;
+                if ((*itr).checkPassword(password)) {
                     cout << "Zalogowales sie" << endl;
                     Sleep(1000);
-                    return (*itr).pobierzId();
+                    return (*itr).getId();
                 }
             }
             komunikat.wyswietl("Podales 3 razy bledne haslo, odczekaj 3s", "ostrzegawczy", 3000);
             return 0;
         }
     }
-    komunikat.wyswietl("Nie ma uzytkownika: " + nazwa, "ostrzegawczy");
+    komunikat.wyswietl("Nie ma uzytkownika: " + name, "ostrzegawczy");
     return 0;
 }
 
-void Uzytkownicy::zmienHaslo(int idZalogowanegoUzytkownika) {
-    string haslo;
+void Uzytkownicy::changePassword(int idZalogowanegoUzytkownika) {
+    string password;
     PlikUzytkownicy plik;
-    vector<Uzytkownik>::iterator koniec = uzytkownicyLista.end();
-    for(vector<Uzytkownik>::iterator itr = uzytkownicyLista.begin(); itr != koniec; ++itr) {
-        if((*itr).pobierzId() == idZalogowanegoUzytkownika) {
+    vector<User>::iterator koniec = uzytkownicyLista.end();
+    for(vector<User>::iterator itr = uzytkownicyLista.begin(); itr != koniec; ++itr) {
+        if((*itr).getId() == idZalogowanegoUzytkownika) {
             cout << "Wprawadz nowe haslo: ";
-            cin >> haslo;
-            (*itr).zmienHaslo(haslo);
+            cin >> password;
+            (*itr).changePassword(password);
             plik.edytujRekord(*itr);
         }
     }

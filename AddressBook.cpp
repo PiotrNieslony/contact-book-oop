@@ -16,7 +16,7 @@ void KsiazkaAdresowa::wyswietlNaglowekTabeli() {
 
 void KsiazkaAdresowa::wyswietlWierszTabeli(Adresat adresat) {
     printf ("|%-3i|%-12s|%-12s|%-11s|%-30s|%-45s|\n",
-            adresat.pobierzId(),
+            adresat.getId(),
             adresat.pobierzImie().c_str(),
             adresat.pobierzNazwisko().c_str(),
             adresat.pobierzTelefon().c_str(),
@@ -50,7 +50,7 @@ void KsiazkaAdresowa::komunikatOilosciZnalezionychKontaktow(int iloscZnalezionyc
 bool KsiazkaAdresowa::czyAresatOTakimIDistnieje(int id) {
     vector<Adresat>::iterator koniec = adresaci.end();
     for(vector<Adresat>::iterator itr = adresaci.begin(); itr != koniec; ++itr) {
-        if((*itr).pobierzId() == id) return true;
+        if((*itr).getId() == id) return true;
     }
     return false;
 }
@@ -167,7 +167,7 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
     id = pobierzLiczbe.wprowadzWartosc();
     vector<Adresat>::iterator koniec = adresaci.end();
     for(vector<Adresat>::iterator itr = adresaci.begin(); itr != koniec; ++itr) {
-        if((*itr).pobierzId() == id) {
+        if((*itr).getId() == id) {
 
             imie = (*itr).pobierzImie();
             nazwisko = (*itr).pobierzNazwisko();
@@ -199,14 +199,14 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
                 case '1':
                     cout << "Wprowadz imie: ";
                     cin >> imie;
-                    (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
+                    (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
                     plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
                     komunikat.wyswietl();
                     return;
                 case '2':
                     cout << "Wprowadz nazwisko: ";
                     cin >> nazwisko;
-                    (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
+                    (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
                     plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
                     komunikat.wyswietl();
                     return;
@@ -214,14 +214,14 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
                     cout << "Wprowadz telefon: ";
                     cin.sync();
                     getline(cin, telefon);
-                    (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
+                    (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
                     plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
                     komunikat.wyswietl();
                     return;
                 case '4':
                     cout << "Wprowadz emial: ";
                     cin >> email;
-                    (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
+                    (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
                     plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
                     komunikat.wyswietl();
                     return;
@@ -229,7 +229,7 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
                     cout << "Wprowadz adres: ";
                     cin.sync();
                     getline(cin, adres);
-                    (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
+                    (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
                     plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
                     komunikat.wyswietl();
                     return;
@@ -246,7 +246,7 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
                     cout << "Wprowadz adres: ";
                     cin.sync();
                     getline(cin,adres);
-                    (*itr).wczytaj(id, imie, nazwisko, telefon, email, adres);
+                    (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
                     plik.edytujRekord(*itr, idZalogowanegoUzytkownika);
                     komunikat.wyswietl();
 
@@ -266,7 +266,7 @@ void KsiazkaAdresowa::usunAdresata(int id) {
     char wybor;
     vector<Adresat>::iterator koniec = adresaci.end();
     for(vector<Adresat>::iterator itr = adresaci.begin(); itr != koniec; ++itr) {
-        if((*itr).pobierzId() == id) {
+        if((*itr).getId() == id) {
             wyswietlNaglowekTabeli();
             wyswietlWierszTabeli(*itr);
             wyswieltLinieOdzielajaca();

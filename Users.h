@@ -8,9 +8,9 @@
 using namespace std;
 
 class Uzytkownicy {
-    vector<Uzytkownik> uzytkownicyLista;
+    vector<User> uzytkownicyLista;
 
-    void dodajUzytkownika(Uzytkownik uzytkownik);
+    void dodajUzytkownika(User uzytkownik);
     int idOstatniegoUzytkownika();
 public:
     Uzytkownicy();
@@ -18,5 +18,5 @@ public:
     int iloscZarejestrowanychUzytkownikow();
     int logowanie();
     void rejestracja();
-    void zmienHaslo(int idZalogowanegoUzytkownika);
+    void changePassword(int idZalogowanegoUzytkownika);
 };

@@ -11,13 +11,13 @@ PlikUzytkownicy::PlikUzytkownicy()
     nazwaPliku = "Uzytkownicy.txt";
 }
 
-PlikUzytkownicy::PlikUzytkownicy(string nazwa)
-    :Plik(nazwa){
-    nazwaPliku = nazwa;
+PlikUzytkownicy::PlikUzytkownicy(string name)
+    :Plik(name){
+    nazwaPliku = name;
 }
 
 
-void PlikUzytkownicy::dodajNowyRekord(Uzytkownik uzytkownik){
+void PlikUzytkownicy::dodajNowyRekord(User uzytkownik){
     fstream plik;
     plik.open(nazwaPliku.c_str(), ios::out | ios::app);
     if(plik.good() == false) {
@@ -25,13 +25,13 @@ void PlikUzytkownicy::dodajNowyRekord(Uzytkownik uzytkownik){
         return ;
     }
 
-    plik << uzytkownik.pobierzId() << "|";
-    plik << uzytkownik.pobierzNazwe() << "|";
-    plik << uzytkownik.pobierzHaslo() << "|" << endl;
+    plik << uzytkownik.getId() << "|";
+    plik << uzytkownik.getName() << "|";
+    plik << uzytkownik.getPassword() << "|" << endl;
     plik.close();
 }
 
-void PlikUzytkownicy::edytujRekord(Uzytkownik uzytkownik){
+void PlikUzytkownicy::edytujRekord(User uzytkownik){
     string linia;
     int idUzytkownika;
     size_t pozycjaSeparatora;
@@ -53,10 +53,10 @@ void PlikUzytkownicy::edytujRekord(Uzytkownik uzytkownik){
     while(getline(plikKopia, linia)) {
         pozycjaSeparatora = linia.find("|");
         idUzytkownika = atoi(linia.substr(0, pozycjaSeparatora).c_str());
-        if (idUzytkownika == uzytkownik.pobierzId()) {
-            plik << uzytkownik.pobierzId() << "|";
-            plik << uzytkownik.pobierzNazwe() << "|";
-            plik << uzytkownik.pobierzHaslo()<< "|" << endl;
+        if (idUzytkownika == uzytkownik.getId()) {
+            plik << uzytkownik.getId() << "|";
+            plik << uzytkownik.getName() << "|";
+            plik << uzytkownik.getPassword()<< "|" << endl;
         } else {
             plik << linia << endl;
         }
@@ -65,11 +65,11 @@ void PlikUzytkownicy::edytujRekord(Uzytkownik uzytkownik){
     plikKopia.close();
 }
 
-void PlikUzytkownicy::wczytajRekordy(vector<Uzytkownik>& uzytkownicyLista){
+void PlikUzytkownicy::wczytajRekordy(vector<User>& uzytkownicyLista){
     string linia;
     int id;
-    string nazwa, haslo;
-    Uzytkownik pojedynczyUzytkownik;
+    string name, password;
+    User pojedynczyUzytkownik;
     fstream plikUzytkownicy;
     size_t pozycjaZnakuOd;
     size_t pozycjaSeparatora;
@@ -89,14 +89,14 @@ void PlikUzytkownicy::wczytajRekordy(vector<Uzytkownik>& uzytkownicyLista){
         pozycjaZnakuOd = pozycjaSeparatora+1;
         pozycjaSeparatora = linia.find("|",pozycjaZnakuOd);
         iloscZnakow = pozycjaSeparatora - pozycjaZnakuOd;
-        nazwa = linia.substr(pozycjaZnakuOd, iloscZnakow);
+        name = linia.substr(pozycjaZnakuOd, iloscZnakow);
 
         pozycjaZnakuOd = pozycjaSeparatora+1;
         pozycjaSeparatora = linia.find("|",pozycjaZnakuOd);
         iloscZnakow = pozycjaSeparatora - pozycjaZnakuOd;
-        haslo = linia.substr(pozycjaZnakuOd, iloscZnakow);
+        password = linia.substr(pozycjaZnakuOd, iloscZnakow);
 
-        pojedynczyUzytkownik.wczytaj(id, nazwa, haslo);
+        pojedynczyUzytkownik.setAll(id, name, password);
         uzytkownicyLista.push_back(pojedynczyUzytkownik);
     }
     plikUzytkownicy.close();

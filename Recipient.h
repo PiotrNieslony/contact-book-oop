@@ -10,8 +10,8 @@ class Adresat{
     string imie, nazwisko, telefon, email, adres;
 public:
     Adresat(int sId, string sImie, string sNazwisko, string sTelefon, string sEmail, string sAdres);
-    void wczytaj(int sId, string sImie, string sNazwisko, string sTelefon, string sEmail, string sAdres);
-    int pobierzId();
+    void setAll(int sId, string sImie, string sNazwisko, string sTelefon, string sEmail, string sAdres);
+    int getId();
     string pobierzImie();
     string pobierzNazwisko();
     string pobierzTelefon();

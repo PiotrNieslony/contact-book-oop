@@ -2,21 +2,21 @@
 
 using namespace std;
 
-#ifndef UZYTKOWNIK_H
-#define UZYTKOWNIK_H
+#ifndef USER_H
+#define USER_H
 
-class Uzytkownik {
+class User {
     int id;
-    string nazwa, haslo;
+    string name, password;
 public:
-    Uzytkownik();
-    Uzytkownik(int sID, string sNazwa, string sHaslo);
-    void wczytaj (int sID, string sNazwa, string sHaslo);
-    int pobierzId();
-    string pobierzNazwe();
-    string pobierzHaslo();
-    bool sprawdzHaslo(string podaneHaslo);
-    void zmienHaslo(string noweHaslo);
+    User();
+    User(int iID, string iName, string iPassword);
+    void setAll (int iID, string iName, string iPassword);
+    int getId();
+    string getName();
+    string getPassword();
+    bool checkPassword(string passwordToCompare);
+    void changePassword(string newPassword);
 };
 
 #endif

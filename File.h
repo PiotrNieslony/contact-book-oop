@@ -10,7 +10,7 @@ class Plik {
 protected:
     string nazwaPliku;
 public:
-    Plik(string nazwa);
+    Plik(string name);
     bool czyPlikJestPusty();
 };
 

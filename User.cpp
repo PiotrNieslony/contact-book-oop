@@ -3,36 +3,36 @@
 
 using namespace std;
 
-Uzytkownik::Uzytkownik(){};
+User::User(){};
 
-Uzytkownik::Uzytkownik(int sID, string sNazwa, string sHaslo) {
-    wczytaj (sID, sNazwa, sHaslo);
+User::User(int iID, string iName, string iPassword) {
+    setAll (iID, iName, iPassword);
 }
 
-void Uzytkownik::wczytaj (int sID, string sNazwa, string sHaslo) {
-    id = sID;
-    nazwa = sNazwa;
-    haslo = sHaslo;
+void User::setAll (int iID, string iName, string iPassword) {
+    id = iID;
+    name = iName;
+    password = iPassword;
 }
 
-int Uzytkownik::pobierzId () {
+int User::getId () {
     return id;
 }
 
-string Uzytkownik::pobierzNazwe () {
-    return nazwa;
+string User::getName () {
+    return name;
 }
 
-string Uzytkownik::pobierzHaslo () {
-    return haslo;
+string User::getPassword () {
+    return password;
 }
 
-bool Uzytkownik::sprawdzHaslo (string podaneHaslo) {
-    if(haslo == podaneHaslo) return true;
+bool User::checkPassword (string passwordToCompare) {
+    if(password == passwordToCompare) return true;
     else return false;
 }
 
-void Uzytkownik::zmienHaslo(string noweHaslo){
-    haslo = noweHaslo;
+void User::changePassword(string newPassword){
+    password = newPassword;
 }
 

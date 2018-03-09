@@ -4,9 +4,9 @@ PlikAdresaci::PlikAdresaci()
     :Plik("Adresaci.txt") {
     nazwaPliku = "Adresaci.txt";
 }
-PlikAdresaci::PlikAdresaci(string nazwa)
-    :Plik(nazwa) {
-    nazwaPliku = nazwa;
+PlikAdresaci::PlikAdresaci(string name)
+    :Plik(name) {
+    nazwaPliku = name;
 }
 
 void PlikAdresaci::edytujRekord(Adresat adresat, int idZalogowanegoUzytkownika) {
@@ -31,8 +31,8 @@ void PlikAdresaci::edytujRekord(Adresat adresat, int idZalogowanegoUzytkownika) 
 
         pozycjaSeparatora = linia.find("|");
         idAdresata = atoi(linia.substr(0, pozycjaSeparatora).c_str());
-        if (idAdresata == adresat.pobierzId()) {
-            plik << adresat.pobierzId() << "|";
+        if (idAdresata == adresat.getId()) {
+            plik << adresat.getId() << "|";
             plik << idZalogowanegoUzytkownika << "|";
             plik << adresat.pobierzImie() << "|";
             plik << adresat.pobierzNazwisko() << "|";
@@ -71,7 +71,7 @@ int PlikAdresaci::usunRekord(Adresat adresat, int idZalogowanegoUzytkownika) {
         pozycjaSeparatora = linia.find("|");
         idAdresata = atoi(linia.substr(0, pozycjaSeparatora).c_str());
 
-        if (idAdresata == adresat.pobierzId()) continue;
+        if (idAdresata == adresat.getId()) continue;
         else {
                 idOstatniegoAdresataWPliku = idAdresata;
                 plik << linia << endl;
@@ -90,7 +90,7 @@ void PlikAdresaci::dodajNowyRekord(Adresat adresat,  int idZalogowanegoUzytkowni
         return ;
     }
 
-    plik << adresat.pobierzId() << "|";
+    plik << adresat.getId() << "|";
     plik << idZalogowanegoUzytkownika << "|";
     plik << adresat.pobierzImie() << "|";
     plik << adresat.pobierzNazwisko() << "|";

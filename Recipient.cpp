@@ -1,9 +1,9 @@
 #include "Recipient.h"
 
 Adresat::Adresat(int sId, string sImie, string sNazwisko, string sTelefon, string sEmail, string sAdres){
-    wczytaj(sId, sImie, sNazwisko, sTelefon, sEmail, sAdres);
+    setAll(sId, sImie, sNazwisko, sTelefon, sEmail, sAdres);
 }
-void  Adresat::wczytaj(int sId, string sImie, string sNazwisko, string sTelefon, string sEmail, string sAdres){
+void  Adresat::setAll(int sId, string sImie, string sNazwisko, string sTelefon, string sEmail, string sAdres){
     id = sId;
     imie = sImie;
     nazwisko = sNazwisko;
@@ -12,7 +12,7 @@ void  Adresat::wczytaj(int sId, string sImie, string sNazwisko, string sTelefon,
     adres = sAdres;
 }
 
-int Adresat::pobierzId(){
+int Adresat::getId(){
     return id;
 }
 string Adresat::pobierzImie(){
