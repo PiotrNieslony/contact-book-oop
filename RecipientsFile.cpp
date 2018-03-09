@@ -16,7 +16,7 @@ void PlikAdresaci::editRecord(Adresat adresat, int idLoggedUser) {
     string copyFileName = "." + fileName;
     remove(copyFileName.c_str());
     if((rename(fileName.c_str(), copyFileName.c_str())) != 0) {
-        ConsoleMessage komunikat( "Blad przy tworzeniu kopii pliku" + copyFileName, "krytyczny");
+        ConsoleMessage message( "Blad przy tworzeniu kopii pliku" + copyFileName, "critical");
         return;
     }
     fstream file;
@@ -24,7 +24,7 @@ void PlikAdresaci::editRecord(Adresat adresat, int idLoggedUser) {
     file.open(fileName.c_str(), ios::out | ios::app);
     fileCopy.open(copyFileName.c_str(),ios::in);
     if(file.good() == false || fileCopy.good() == false) {
-        ConsoleMessage komunikat("Wystapil problem przy probie zapisu danych do pliku." + fileName, "krytyczny");
+        ConsoleMessage message("Wystapil problem przy probie zapisu danych do pliku." + fileName, "critical");
         return;
     }
     while(getline(fileCopy, lineFromFile)) {
@@ -55,7 +55,7 @@ int PlikAdresaci::usunRekord(Adresat adresat, int idLoggedUser) {
     string copyFileName = "." + fileName;
     remove(copyFileName.c_str());
     if((rename(fileName.c_str(), copyFileName.c_str())) != 0) {
-        ConsoleMessage komunikat( "Blad przy tworzeniu kopii pliku" + copyFileName, "krytyczny");
+        ConsoleMessage message( "Blad przy tworzeniu kopii pliku" + copyFileName, "critical");
         return 0;
     }
     fstream file;
@@ -63,7 +63,7 @@ int PlikAdresaci::usunRekord(Adresat adresat, int idLoggedUser) {
     file.open(fileName.c_str(), ios::out | ios::app);
     fileCopy.open(copyFileName.c_str(),ios::in);
     if(file.good() == false || fileCopy.good() == false) {
-        ConsoleMessage komunikat("Wystapil problem przy probie zapisu danych do pliku." + fileName, "krytyczny");
+        ConsoleMessage message("Wystapil problem przy probie zapisu danych do pliku." + fileName, "critical");
         return 0;
     }
     while(getline(fileCopy, lineFromFile)) {
@@ -86,7 +86,7 @@ void PlikAdresaci::addRecord(Adresat adresat,  int idLoggedUser) {
     fstream file;
     file.open(fileName.c_str(), ios::out | ios::app);
     if(file.good() == false) {
-        ConsoleMessage komunikat("Wystapil problem przy probie zapisu danych do pliku." + fileName, "krytyczny");
+        ConsoleMessage message("Wystapil problem przy probie zapisu danych do pliku." + fileName, "critical");
         return ;
     }
 
@@ -113,7 +113,7 @@ int PlikAdresaci::loadAllRecords(vector<Adresat> & adresaci, int idLoggedUser) {
 
     plikAdresaci.open(fileName.c_str(),ios::in);
     if(plikAdresaci.good() == false) {
-        ConsoleMessage komunikat("Wystapil problem z odczytem kontaktow z pliku: " + fileName, "krytyczny");
+        ConsoleMessage message("Wystapil problem z odczytem kontaktow z pliku: " + fileName, "critical");
         return 0;
     }
 

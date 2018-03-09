@@ -60,7 +60,7 @@ void Users::singUp() {
 }
 
 int Users::logIn() {
-    ConsoleMessage komunikat;
+    ConsoleMessage message;
     string name, password;
     cout << "Podaj nazwe:  ";
     cin >> name;
@@ -76,11 +76,11 @@ int Users::logIn() {
                     return (*itr).getId();
                 }
             }
-            komunikat.wyswietl("Podales 3 razy bledne haslo, odczekaj 3s", "ostrzegawczy", 3000);
+            message.display("Podales 3 razy bledne haslo, odczekaj 3s", "warning", 3000);
             return 0;
         }
     }
-    komunikat.wyswietl("Nie ma uzytkownika: " + name, "ostrzegawczy");
+    message.display("Nie ma uzytkownika: " + name, "warning");
     return 0;
 }
 

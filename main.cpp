@@ -16,7 +16,7 @@ int main() {
     string szukanaWartosc;
     Users uzytkownicy;
     KsiazkaAdresowa adresaci;
-    ConsoleMessage komunikat;
+    ConsoleMessage message;
     PobierzLiczbeCalkowita liczba;
 
     while(true) {
@@ -132,7 +132,7 @@ int main() {
                 exit(0);
                 break;
             default:
-                komunikat.ostrzegawczy("Nie ma takiej opcji w menu");
+                message.warning("Nie ma takiej opcji w menu");
                 break;
             }
         }

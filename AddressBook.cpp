@@ -99,7 +99,7 @@ void KsiazkaAdresowa::wpiszAdresata() {
     Adresat adresat(id, imie, nazwisko, telefon, email, adres);
     dodajAdresata(adresat);
     idOstatniegoAdresataWPliku++;
-    ConsoleMessage komunikat("Super, dodales nowe dane kontaktowe.");
+    ConsoleMessage message("Super, dodales nowe dane kontaktowe.");
 }
 
 int KsiazkaAdresowa::iloscAdresatow() {
@@ -156,8 +156,8 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
     int id;
     char wybor;
     string imie, nazwisko, telefon, email, adres;
-    ConsoleMessage komunikat;
-    komunikat.wczytajTekst("Dane zostaly zmienione.");
+    ConsoleMessage message;
+    message.setText("Dane zostaly zmienione.");
     PlikAdresaci file;
     PobierzLiczbeCalkowita pobierzLiczbe;
 
@@ -201,14 +201,14 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
                     cin >> imie;
                     (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
                     file.editRecord(*itr, idLoggedUser);
-                    komunikat.wyswietl();
+                    message.display();
                     return;
                 case '2':
                     cout << "Wprowadz nazwisko: ";
                     cin >> nazwisko;
                     (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
                     file.editRecord(*itr, idLoggedUser);
-                    komunikat.wyswietl();
+                    message.display();
                     return;
                 case 3:
                     cout << "Wprowadz telefon: ";
@@ -216,14 +216,14 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
                     getline(cin, telefon);
                     (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
                     file.editRecord(*itr, idLoggedUser);
-                    komunikat.wyswietl();
+                    message.display();
                     return;
                 case '4':
                     cout << "Wprowadz emial: ";
                     cin >> email;
                     (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
                     file.editRecord(*itr, idLoggedUser);
-                    komunikat.wyswietl();
+                    message.display();
                     return;
                 case '5':
                     cout << "Wprowadz adres: ";
@@ -231,7 +231,7 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
                     getline(cin, adres);
                     (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
                     file.editRecord(*itr, idLoggedUser);
-                    komunikat.wyswietl();
+                    message.display();
                     return;
                 case '6':
                     cout << "Wprowadz imie: ";
@@ -248,18 +248,18 @@ void KsiazkaAdresowa::edytujDaneAdresata() {
                     getline(cin,adres);
                     (*itr).setAll(id, imie, nazwisko, telefon, email, adres);
                     file.editRecord(*itr, idLoggedUser);
-                    komunikat.wyswietl();
+                    message.display();
 
                     return;
                 case '9':
                     return;
                 default:
-                    komunikat.wyswietl("Nie ma takiej opcji w menu", "ostrzegawczy", 0);
+                    message.display("Nie ma takiej opcji w menu", "warning", 0);
                 }
             }
         }
     }
-    komunikat.neutralny("Kontakt o takim ID nie istnieje. W celu sprawdzenia ID wyszukaj lub wyswietl wszystkie kontakty");
+    message.neutral("Kontakt o takim ID nie istnieje. W celu sprawdzenia ID wyszukaj lub wyswietl wszystkie kontakty");
 }
 
 void KsiazkaAdresowa::usunAdresata(int id) {
@@ -278,14 +278,14 @@ void KsiazkaAdresowa::usunAdresata(int id) {
                 idOstatniegoAdresataWPliku = file.usunRekord(*itr, idLoggedUser);
                 adresaci.erase(itr);
                 if(file.isFileEmpty()) idOstatniegoAdresataWPliku = 0;
-                ConsoleMessage komunikat("Kontakt zostal usuniety.");
+                ConsoleMessage message("Kontakt zostal usuniety.");
                 return;
             } else {
                 return;
             }
         }
     }
-    ConsoleMessage komunikat("Kontakt o takim ID nie istnieje", "ostrzegawczy");
+    ConsoleMessage message("Kontakt o takim ID nie istnieje", "warning");
 }
 
 void KsiazkaAdresowa::czyszczenieVektora() {
