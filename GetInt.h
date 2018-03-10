@@ -3,14 +3,14 @@
 
 using namespace std;
 
-#ifndef POBIERZ_LICZBE_CALKOWITA_H
-#define POBIERZ_LICZBE_CALKOWITA_H
+#ifndef GET_INT_H
+#define GET_INT_H
 
-class PobierzLiczbeCalkowita{
-    int liczbaCalkowita;
+class GetInt{
+    int intNumber;
 public:
-    PobierzLiczbeCalkowita();
-    wprowadzWartosc();
+    GetInt();
+    enterValue();
 };
 
 #endif
