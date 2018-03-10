@@ -14,17 +14,17 @@ int main() {
     int idLoggedUser = 0;
     int id = 0;
     string searchedValue;
-    Users uzytkownicy;
+    Users users;
     AddressBook recipients;
     ConsoleMessage message;
-    GetInt liczba;
+    GetInt getNumber;
 
     while(true) {
         if( idLoggedUser == 0) {
             system("cls");
             naglowekAplikacji();
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),11);
-            cout << "Ilosc zarejestrowanych uzytkownikow: " << uzytkownicy.numberOfRegisteredUsers() << endl << endl;
+            cout << "Ilosc zarejestrowanych uzytkownikow: " << users.numberOfRegisteredUsers() << endl << endl;
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),15);
             cout << "1. Rejestracja" << endl;
             cout << "2. Logownaie" << endl;
@@ -35,13 +35,13 @@ int main() {
             cin.sync();
 
             if(choice == '1') {
-                uzytkownicy.singUp();
+                users.singUp();
             } else if(choice == '2')     {
-                idLoggedUser = uzytkownicy.logIn();
+                idLoggedUser = users.logIn();
                 recipients.setIdOfLoggedUser(idLoggedUser);
                 recipients.loadRecipientsFromFile();
             } else if(choice == '3') {
-                uzytkownicy.displayUsers();
+                users.displayUsers();
             } else if(choice == '9') {
                 exit(0);
             }
@@ -77,7 +77,7 @@ int main() {
                 system("cls");
                 cout << "Usuwanie:" << endl;
                 cout << "Podaj ID kontaktu ktory chcesz usunac: ";
-                id = liczba.enterValue();
+                id = getNumber.enterValue();
                 system("cls");
                 recipients.removeRecipient(id);
                 break;
@@ -120,7 +120,7 @@ int main() {
                 cin >> choice;
                 cin.sync();
                 if(choice == '1') {
-                    uzytkownicy.changePassword(idLoggedUser);
+                    users.changePassword(idLoggedUser);
                 } else if(choice == '2') {
                     recipients.clearVector();
                     idLoggedUser = 0;
