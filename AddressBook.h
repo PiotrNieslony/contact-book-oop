@@ -9,19 +9,19 @@
 
 using namespace std;
 
-class KsiazkaAdresowa {
+class AddressBook {
     vector<Recipient> recipients;
     int idLoggedUser;
-    int idOstatniegoAdresataWPliku;
+    int idOfLastRecipientInFile;
 
-    void wyswieltLinieOdzielajaca();
-    void wyswietlNaglowekTabeli();
-    void wyswietlWierszTabeli(Recipient recipient);
-    void komunikatOilosciZnalezionychKontaktow(int iloscZnalezionychKontaktow, string szukanaWartosc);
+    void displaySeparatingLine();
+    void displayHeaderTable();
+    void displayTableRow(Recipient recipient);
+    void messageNumberOfFoundRecipients(int quantityOfFoundRecipients, string searchedValue);
 public:
     bool czyAresatOTakimIDistnieje(int id);
-    KsiazkaAdresowa();
-    KsiazkaAdresowa(int idLoggedUser);
+    AddressBook();
+    AddressBook(int idLoggedUser);
     void wczytajKontaktyZPliku();
     void dodajAdresata(Recipient recipient);
     void wpiszAdresata();

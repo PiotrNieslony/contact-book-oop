@@ -12,7 +12,7 @@ RecipientsFile::RecipientsFile(string name)
 void RecipientsFile::editRecord(Recipient recipient, int idLoggedUser) {
     string lineFromFile;
     int recipientId;
-    size_t separatorPositin;
+    size_t separatorPosition;
     string copyFileName = "." + fileName;
     remove(copyFileName.c_str());
     if((rename(fileName.c_str(), copyFileName.c_str())) != 0) {
@@ -29,8 +29,8 @@ void RecipientsFile::editRecord(Recipient recipient, int idLoggedUser) {
     }
     while(getline(fileCopy, lineFromFile)) {
 
-        separatorPositin = lineFromFile.find("|");
-        recipientId = atoi(lineFromFile.substr(0, separatorPositin).c_str());
+        separatorPosition = lineFromFile.find("|");
+        recipientId = atoi(lineFromFile.substr(0, separatorPosition).c_str());
         if (recipientId == recipient.getId()) {
             file << recipient.getId() << "|";
             file << idLoggedUser << "|";
@@ -50,8 +50,8 @@ void RecipientsFile::editRecord(Recipient recipient, int idLoggedUser) {
 int RecipientsFile::deleteRecord(Recipient recipient, int idLoggedUser) {
     string lineFromFile;
     int recipientId;
-    int idOstatniegoAdresataWPliku;
-    size_t separatorPositin;
+    int idOfLastRecipientInFile;
+    size_t separatorPosition;
     string copyFileName = "." + fileName;
     remove(copyFileName.c_str());
     if((rename(fileName.c_str(), copyFileName.c_str())) != 0) {
@@ -68,18 +68,18 @@ int RecipientsFile::deleteRecord(Recipient recipient, int idLoggedUser) {
     }
     while(getline(fileCopy, lineFromFile)) {
 
-        separatorPositin = lineFromFile.find("|");
-        recipientId = atoi(lineFromFile.substr(0, separatorPositin).c_str());
+        separatorPosition = lineFromFile.find("|");
+        recipientId = atoi(lineFromFile.substr(0, separatorPosition).c_str());
 
         if (recipientId == recipient.getId()) continue;
         else {
-                idOstatniegoAdresataWPliku = recipientId;
+                idOfLastRecipientInFile = recipientId;
                 file << lineFromFile << endl;
         }
     }
     file.close();
     fileCopy.close();
-    return idOstatniegoAdresataWPliku;
+    return idOfLastRecipientInFile;
 }
 
 void RecipientsFile::addRecord(Recipient recipient,  int idLoggedUser) {
@@ -103,61 +103,61 @@ void RecipientsFile::addRecord(Recipient recipient,  int idLoggedUser) {
 int RecipientsFile::loadAllRecords(vector<Recipient> & recipients, int idLoggedUser) {
     string lineFromFile;
     int id;
-    int idWlascicielaKontaktu;
-    int idOstatniegoAdresata;
+    int idContactOwner;
+    int idOfLastRecipient;
     string firstName, lastName, phone, email, address;
-    fstream plikAdresaci;
-    size_t pozycjaZnakuOd;
-    size_t separatorPositin;
+    fstream recipientsFile;
+    size_t charPosition_from;
+    size_t separatorPosition;
     int charQuantity;
 
-    plikAdresaci.open(fileName.c_str(),ios::in);
-    if(plikAdresaci.good() == false) {
+    recipientsFile.open(fileName.c_str(),ios::in);
+    if(recipientsFile.good() == false) {
         ConsoleMessage message("Wystapil problem z odczytem kontaktow z pliku: " + fileName, "critical");
         return 0;
     }
 
-    while(getline(plikAdresaci, lineFromFile)) {
+    while(getline(recipientsFile, lineFromFile)) {
 
-        separatorPositin = lineFromFile.find("|");
-        id = atoi(lineFromFile.substr(0, separatorPositin).c_str());
-        idOstatniegoAdresata = id;
+        separatorPosition = lineFromFile.find("|");
+        id = atoi(lineFromFile.substr(0, separatorPosition).c_str());
+        idOfLastRecipient = id;
 
-        pozycjaZnakuOd = separatorPositin+1;
-        separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
-        charQuantity = separatorPositin - pozycjaZnakuOd;
-        idWlascicielaKontaktu = atoi(lineFromFile.substr(pozycjaZnakuOd, charQuantity).c_str());
-        if(idWlascicielaKontaktu != idLoggedUser) continue;
+        charPosition_from = separatorPosition+1;
+        separatorPosition = lineFromFile.find("|",charPosition_from);
+        charQuantity = separatorPosition - charPosition_from;
+        idContactOwner = atoi(lineFromFile.substr(charPosition_from, charQuantity).c_str());
+        if(idContactOwner != idLoggedUser) continue;
 
-        pozycjaZnakuOd = separatorPositin+1;
-        separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
-        charQuantity = separatorPositin - pozycjaZnakuOd;
-        firstName = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
+        charPosition_from = separatorPosition+1;
+        separatorPosition = lineFromFile.find("|",charPosition_from);
+        charQuantity = separatorPosition - charPosition_from;
+        firstName = lineFromFile.substr(charPosition_from, charQuantity);
 
-        pozycjaZnakuOd = separatorPositin+1;
-        separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
-        charQuantity = separatorPositin - pozycjaZnakuOd;
-        lastName = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
+        charPosition_from = separatorPosition+1;
+        separatorPosition = lineFromFile.find("|",charPosition_from);
+        charQuantity = separatorPosition - charPosition_from;
+        lastName = lineFromFile.substr(charPosition_from, charQuantity);
 
-        pozycjaZnakuOd = separatorPositin+1;
-        separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
-        charQuantity = separatorPositin - pozycjaZnakuOd;
-        phone = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
+        charPosition_from = separatorPosition+1;
+        separatorPosition = lineFromFile.find("|",charPosition_from);
+        charQuantity = separatorPosition - charPosition_from;
+        phone = lineFromFile.substr(charPosition_from, charQuantity);
 
-        pozycjaZnakuOd = separatorPositin+1;
-        separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
-        charQuantity = separatorPositin - pozycjaZnakuOd;
-        email = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
+        charPosition_from = separatorPosition+1;
+        separatorPosition = lineFromFile.find("|",charPosition_from);
+        charQuantity = separatorPosition - charPosition_from;
+        email = lineFromFile.substr(charPosition_from, charQuantity);
 
-        pozycjaZnakuOd = separatorPositin+1;
-        separatorPositin = lineFromFile.find("|",pozycjaZnakuOd);
-        charQuantity = separatorPositin - pozycjaZnakuOd;
-        address = lineFromFile.substr(pozycjaZnakuOd, charQuantity);
+        charPosition_from = separatorPosition+1;
+        separatorPosition = lineFromFile.find("|",charPosition_from);
+        charQuantity = separatorPosition - charPosition_from;
+        address = lineFromFile.substr(charPosition_from, charQuantity);
 
-        Recipient pojedynczyAdresat(id, firstName, lastName, phone, email, address);
+        Recipient singleRecipients(id, firstName, lastName, phone, email, address);
 
-        recipients.push_back(pojedynczyAdresat);
+        recipients.push_back(singleRecipients);
     }
-    plikAdresaci.close();
-    return idOstatniegoAdresata;
+    recipientsFile.close();
+    return idOfLastRecipient;
 }

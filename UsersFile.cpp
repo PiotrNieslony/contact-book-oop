@@ -34,7 +34,7 @@ void UsersFile::addRecord(User user){
 void UsersFile::editRecord(User user){
     string lineFromFile;
     int userId;
-    size_t separatorPositin;
+    size_t separatorPosition;
     int i = 0;
     string copyFileName = "." + fileName;
     remove(copyFileName.c_str());
@@ -51,8 +51,8 @@ void UsersFile::editRecord(User user){
         return;
     }
     while(getline(fileCopy, lineFromFile)) {
-        separatorPositin = lineFromFile.find("|");
-        userId = atoi(lineFromFile.substr(0, separatorPositin).c_str());
+        separatorPosition = lineFromFile.find("|");
+        userId = atoi(lineFromFile.substr(0, separatorPosition).c_str());
         if (userId == user.getId()) {
             file << user.getId() << "|";
             file << user.getName() << "|";
@@ -72,7 +72,7 @@ void UsersFile::loadAllRecords(vector<User>& listOfUser){
     User singleUser;
     fstream usersFile;
     size_t charPosition_from;
-    size_t separatorPositin;
+    size_t separatorPosition;
     int charQuantity;
 
     usersFile.open(fileName.c_str(),ios::in);
@@ -83,17 +83,17 @@ void UsersFile::loadAllRecords(vector<User>& listOfUser){
 
     while(getline(usersFile, lineFromFile)) {
 
-        separatorPositin = lineFromFile.find("|");
-       id = atoi(lineFromFile.substr(0, separatorPositin).c_str());
+        separatorPosition = lineFromFile.find("|");
+       id = atoi(lineFromFile.substr(0, separatorPosition).c_str());
 
-        charPosition_from = separatorPositin+1;
-        separatorPositin = lineFromFile.find("|",charPosition_from);
-        charQuantity = separatorPositin - charPosition_from;
+        charPosition_from = separatorPosition+1;
+        separatorPosition = lineFromFile.find("|",charPosition_from);
+        charQuantity = separatorPosition - charPosition_from;
         name = lineFromFile.substr(charPosition_from, charQuantity);
 
-        charPosition_from = separatorPositin+1;
-        separatorPositin = lineFromFile.find("|",charPosition_from);
-        charQuantity = separatorPositin - charPosition_from;
+        charPosition_from = separatorPosition+1;
+        separatorPosition = lineFromFile.find("|",charPosition_from);
+        charQuantity = separatorPosition - charPosition_from;
         password = lineFromFile.substr(charPosition_from, charQuantity);
 
         singleUser.setAll(id, name, password);

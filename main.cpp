@@ -13,9 +13,9 @@ int main() {
     char wybor;
     int idLoggedUser = 0;
     int id = 0;
-    string szukanaWartosc;
+    string searchedValue;
     Users uzytkownicy;
-    KsiazkaAdresowa recipients;
+    AddressBook recipients;
     ConsoleMessage message;
     PobierzLiczbeCalkowita liczba;
 
@@ -93,14 +93,14 @@ int main() {
                 if (wybor == '1') {
                     system("cls");
                     cout << "Podaj szukane Imie: ";
-                    cin >> szukanaWartosc;
-                    recipients.wyszukajAdresataPoImieniu(szukanaWartosc);
+                    cin >> searchedValue;
+                    recipients.wyszukajAdresataPoImieniu(searchedValue);
                     system("pause");
                 } else if(wybor == '2') {
                     system("cls");
                     cout << "Podaj szukane nazwisko: ";
-                    cin >> szukanaWartosc;
-                    recipients.wyszukajAdresataPoNazwisku(szukanaWartosc);
+                    cin >> searchedValue;
+                    recipients.wyszukajAdresataPoNazwisku(searchedValue);
                     system("pause");
                 } else if(wybor == '9') {
                     break;
