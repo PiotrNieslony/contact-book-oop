@@ -142,6 +142,6 @@ int main() {
 
 void naglowekAplikacji() {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),10);
-    cout << "KSIAZKA ADRESOWA v.OBIETKOWA 1.0" << endl;
+    cout << "KSIAZKA ADRESOWA v.OBIETKOWA 1.1" << endl;
     cout << "---------------------------" << endl;
 }
